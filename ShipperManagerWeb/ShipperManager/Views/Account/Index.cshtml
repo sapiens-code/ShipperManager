@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="LoginForm">
+    @using (Html.BeginForm("Login", "Account", new { @strUrl = Request.Url.ToString() }))
+    {
+        @Html.Label("Username:")
+        @Html.TextBox("txtUser", "", htmlAttributes: new { @class = "textboxDangNhap", @placeholder = "nhập user name" })
+        @Html.Label("Password:")
+        @Html.Password("txtPass", "", htmlAttributes: new { @class = "textboxDangNhap", @placeholder = "nhập password" })
+        <p>
+            <button type="submit" name="btnDangNhap" class="buttonDangNhap">Sign In</button>
+        </p>
+        <div style="color:red; font-style:italic; font-size:8pt">@ViewBag.ThongBao</div>
+    }
+</div>
+
