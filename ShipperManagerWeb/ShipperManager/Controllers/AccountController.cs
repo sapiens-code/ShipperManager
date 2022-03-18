@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Firebase.Database;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using ShipperManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,12 +19,11 @@ namespace ShipperManager.Controllers
             return View();
         }
 
-        public ActionResult Login(string strUrl,FormCollection f)
+        public async Task<ActionResult> LoginAsync(string strUrl,FormCollection f)
         {
-            
             string username = f["txtUser"].ToString();
             string password = f["txtPass"].ToString();
-            if (CheckUser(username, password))
+            if (await CheckUser(username, password))
             {
                 Session["maTaiKhoan"] = username;
                 HttpCookie ck = new HttpCookie("myCookies");
@@ -28,13 +32,24 @@ namespace ShipperManager.Controllers
                 ck.Expires = DateTime.Now.AddDays(3);//giới hạn thời gian là 3 ngày
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.ThongBao = "tài khoản hoặc mật khẩu không đúng";
-            return RedirectToAction("Index", "Home");
+            TempData["ThongBao"] = "tài khoản hoặc mật khẩu không đúng";
+            return Redirect(strUrl);
         }
 
-        private bool CheckUser(string username,string password)
+        private async Task<bool> CheckUser(string username,string password)
         {
-            return true;
+            var firebaseClient = new FirebaseClient("https://shippermanager-be26e-default-rtdb.firebaseio.com/");
+            var nhanviens = await firebaseClient
+              .Child("NhanVien")
+              .OnceAsync<NhanVien>();
+            foreach(var item in nhanviens)
+            {
+                var nv = item.Object;
+                if (nv.TaiKhoan.Equals(username) && nv.MatKhau.Equals(password)) return true;
+            }
+            return false;
         }
+
+        
     }
 }

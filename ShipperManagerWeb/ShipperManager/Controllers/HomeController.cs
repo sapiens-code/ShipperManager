@@ -14,6 +14,7 @@ namespace ShipperManager.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.ThongBao = "hello";
             return View();
         }
 

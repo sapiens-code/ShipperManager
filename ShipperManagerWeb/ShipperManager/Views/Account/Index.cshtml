@@ -3,19 +3,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<div id="LoginForm">
-    @using (Html.BeginForm("Login", "Account", new { @strUrl = Request.Url.ToString() }))
-    {
-        @Html.Label("Username:")
-        @Html.TextBox("txtUser", "", htmlAttributes: new { @class = "textboxDangNhap", @placeholder = "nhập user name" })
-        @Html.Label("Password:")
-        @Html.Password("txtPass", "", htmlAttributes: new { @class = "textboxDangNhap", @placeholder = "nhập password" })
-        <p>
-            <button type="submit" name="btnDangNhap" class="buttonDangNhap">Sign In</button>
-        </p>
-        <div style="color:red; font-style:italic; font-size:8pt">@ViewBag.ThongBao</div>
-    }
+<h2>Login Page</h2>
+<div class="login">
+    <div id="login">
+        @using (Html.BeginForm("LoginAsync", "Account", new { @strUrl = Request.Url.ToString() }))
+        {
+            @Html.Label("Username:")
+            @Html.TextBox("txtUser", "", htmlAttributes: new { @id = "UserName", @placeholder = "enter user name" })
+            <br /><br />
+            @Html.Label("Password:")
+            @Html.Password("txtPass", "", htmlAttributes: new { @id = "Password", @placeholder = "enter password" })
+            <br /><br />
+            <input type="submit" name="btnDangNhap" id="login-button" value="Sign In" />
+            <br /><br />
+            <input type="checkbox" id="check">
+            <span>Remember me</span>
+            <br><br>
+            <div style="color:red; font-style:italic; font-size:8pt">@TempData["ThongBao"]</div>
+            <br><br>
+            <a href="#">Forget Passowrd</a>
+        }
+    </div>
 </div>
-
