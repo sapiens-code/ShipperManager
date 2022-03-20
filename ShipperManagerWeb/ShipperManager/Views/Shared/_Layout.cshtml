@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/LoginLayout.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/MainLayout.css" rel="stylesheet" type="text/css" />*@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,9 +21,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Sản Phẩm", "Index", "Product")</li>
+                    <li>@Html.ActionLink("Đơn Hàng", "About", "Order")</li>
+                    <li>@Html.ActionLink("Shipper", "Contact", "Shipper")</li>
+                    <li>@Html.ActionLink("Khách Hàng", "Contact", "Customer")</li>
                 </ul>
             </div>
         </div>

@@ -354,3 +354,7 @@ F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperMana
 F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\obj\Debug\ShipperManager.csproj.CopyComplete
 F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\obj\Debug\ShipperManager.dll
 F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\obj\Debug\ShipperManager.pdb
+F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\bin\Firebase.Auth.dll
+F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\bin\Firebase.Storage.dll
+F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\bin\System.Diagnostics.DiagnosticSource.dll
+F:\SourceCode\Sipper Manager System\ShipperManager\ShipperManagerWeb\ShipperManager\bin\System.Diagnostics.DiagnosticSource.xml

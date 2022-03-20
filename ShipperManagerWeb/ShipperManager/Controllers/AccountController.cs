@@ -30,7 +30,7 @@ namespace ShipperManager.Controllers
                 ck["name"] = username;
                 Response.Cookies.Add(ck);
                 ck.Expires = DateTime.Now.AddDays(3);//giới hạn thời gian là 3 ngày
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Product");
             }
             TempData["ThongBao"] = "tài khoản hoặc mật khẩu không đúng";
             return Redirect(strUrl);
