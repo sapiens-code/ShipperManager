@@ -23,13 +23,22 @@ namespace ShipperManager.Controllers
         {
             string username = f["txtUser"].ToString();
             string password = f["txtPass"].ToString();
-            if (await CheckUser(username, password))
+
+            NhanVien nhanVien = null;
+            foreach (var item in await DatabaseUtils.GetAllElement<NhanVien>("NhanVien"))
             {
-                Session["maTaiKhoan"] = username;
-                HttpCookie ck = new HttpCookie("myCookies");
-                ck["name"] = username;
-                Response.Cookies.Add(ck);
-                ck.Expires = DateTime.Now.AddDays(3);//giới hạn thời gian là 3 ngày
+                var nv = item.Object;
+                nv.ID = item.Key;
+                if (nv.TaiKhoan.Equals(username) && nv.MatKhau.Equals(password)) nhanVien = nv;
+            }
+
+            if (nhanVien != null)
+            {
+                Session["maNhanVien"] = nhanVien.ID;
+                //HttpCookie ck = new HttpCookie("myCookies");
+                //ck["name"] = username;
+                //Response.Cookies.Add(ck);
+                //ck.Expires = DateTime.Now.AddDays(3);//giới hạn thời gian là 3 ngày
                 return RedirectToAction("Index", "Product");
             }
             TempData["ThongBao"] = "tài khoản hoặc mật khẩu không đúng";
@@ -38,13 +47,10 @@ namespace ShipperManager.Controllers
 
         private async Task<bool> CheckUser(string username,string password)
         {
-            var firebaseClient = new FirebaseClient("https://shippermanager-be26e-default-rtdb.firebaseio.com/");
-            var nhanviens = await firebaseClient
-              .Child("NhanVien")
-              .OnceAsync<NhanVien>();
-            foreach(var item in nhanviens)
+            foreach(var item in await DatabaseUtils.GetAllElement<NhanVien>("NhanVien"))
             {
                 var nv = item.Object;
+                nv.ID = item.Key;
                 if (nv.TaiKhoan.Equals(username) && nv.MatKhau.Equals(password)) return true;
             }
             return false;

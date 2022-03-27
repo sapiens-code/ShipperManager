@@ -12,7 +12,7 @@ namespace ShipperManager.Models
         [Display(Name = "Tên")]
         public string Ten { get; set; }
         [Display(Name = "Giá")]
-        public double Gia { get; set; }
+        public decimal Gia { get; set; }
         [Display(Name = "Mô Tả")]
         public string MoTa { get; set; }
         [Display(Name = "Danh Mục")]
@@ -25,7 +25,7 @@ namespace ShipperManager.Models
 
         }
 
-        public SanPham(string id, string ten, double gia, string moTa, string danhMuc, string imagePath)
+        public SanPham(string id, string ten, decimal gia, string moTa, string danhMuc, string imagePath)
         {
             Id = id;
             Ten = ten;
@@ -35,7 +35,7 @@ namespace ShipperManager.Models
             ImagePath = imagePath;
         }
 
-        public SanPham(string ten, double gia, string moTa, string danhMuc, string imagePath)
+        public SanPham(string ten, decimal gia, string moTa, string danhMuc, string imagePath)
         {
             Ten = ten;
             Gia = gia;

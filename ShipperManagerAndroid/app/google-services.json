@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "403228950057",
+    "firebase_url": "https://shippermanager-be26e-default-rtdb.firebaseio.com",
+    "project_id": "shippermanager-be26e",
+    "storage_bucket": "shippermanager-be26e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403228950057:android:f6161a111785bee6446638",
+        "android_client_info": {
+          "package_name": "com.example.shippermanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403228950057-g7udql57stkh8t5g147crvcatmbp3dk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7jq6kO2IqVoqn_ajaeVMCyVcoLe3kWfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403228950057-g7udql57stkh8t5g147crvcatmbp3dk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

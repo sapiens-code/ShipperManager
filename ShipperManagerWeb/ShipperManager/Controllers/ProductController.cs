@@ -1,4 +1,6 @@
 ﻿using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Database.Query;
 using Firebase.Storage;
 using ShipperManager.Models;
 using System;
@@ -19,15 +21,18 @@ namespace ShipperManager.Controllers
         private static string AuthEmail = "lamminhhy9999@gmail.com";
         private static string AuthPassword = "01674275557";
         // GET: Product
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<SanPham> lstSp = new List<SanPham>()
+            List<SanPham> lst = new List<SanPham>();
+            var products = await DatabaseUtils.GetAllElement<SanPham>("SanPham");
+            foreach(var item in products)
             {
-                new SanPham("123","áo sơ mi",350000,"áo chât lượng cao nhà làm","Shirt","c:/image"),
-                new SanPham("123","áo sơ mi",350000,"áo chât lượng cao nhà làm","Shirt","c:/image"),
-                new SanPham("123","áo sơ mi",350000,"áo chât lượng cao nhà làm","Shirt","c:/image"),
-            };
-            return View(lstSp);
+                var sp = item.Object;
+                sp.Id = item.Key;
+                lst.Add(sp);
+            }
+
+            return View(lst);
         }
 
         // GET: Product/Details/5
@@ -49,12 +54,17 @@ namespace ShipperManager.Controllers
             try
             {
                 FileStream stream;
-                if(file.ContentLength > 0)
+                if(file.ContentLength > 0 && product != null)
                 {
-                    string path = Path.Combine(Server.MapPath("~/Content/images/"), file.FileName);
+                    string fileName = Guid.NewGuid() + "-" + file.FileName;
+                    //upload product image
+                    string path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
                     file.SaveAs(path);
                     stream = new FileStream(Path.Combine(path), FileMode.Open);
-                    await Task.Run(() => Upload(stream, file.FileName));
+                    string link = await Upload(stream, fileName);
+                    product.ImagePath = link;
+                    //update product object
+                    await DatabaseUtils.AddElement("SanPham", product);
                 }
 
                 return RedirectToAction("Index");
@@ -65,7 +75,7 @@ namespace ShipperManager.Controllers
             }
         }
 
-        private async void Upload(FileStream stream,string fileName)
+        private async Task<string> Upload(FileStream stream,string fileName)
         {
             // of course you can login using other method, not just email+password
             var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
@@ -85,11 +95,10 @@ namespace ShipperManager.Controllers
                 .Child(fileName)
                 .PutAsync(stream, cancellation.Token);
 
-
             try
             {
                 // error during upload will be thrown when you await the task
-                string link = await task;
+                return await task;
             }
             catch (Exception ex)
             {
@@ -99,6 +108,7 @@ namespace ShipperManager.Controllers
             {
                 stream.Close();
             }
+            return null;
         }
 
         // GET: Product/Edit/5
@@ -114,7 +124,6 @@ namespace ShipperManager.Controllers
             try
             {
                 // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
             catch
