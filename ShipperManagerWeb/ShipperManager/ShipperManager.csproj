@@ -283,6 +283,7 @@
     <Compile Include="Models\PhuongThucThanhToan.cs" />
     <Compile Include="Models\SanPham.cs" />
     <Compile Include="Models\Shipper.cs" />
+    <Compile Include="Models\TableCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\DonHangViewModel.cs" />
   </ItemGroup>
@@ -331,6 +332,7 @@
     <Content Include="Views\PhuongThucThanhToan\Index.cshtml" />
     <Content Include="Views\DonHang\Create.cshtml" />
     <Content Include="Views\DonHang\OrderDetailPartial.cshtml" />
+    <Content Include="Views\DonHang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

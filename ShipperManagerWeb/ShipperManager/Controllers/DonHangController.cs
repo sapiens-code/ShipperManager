@@ -11,15 +11,24 @@ namespace ShipperManager.Controllers
 {
     public class DonHangController : Controller
     {
+        private string OrderDetailSessionName = "OrderDetail";
         // GET: DonHang
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var lstDonHang = await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang);
+            var lst = new List<DonHang>();
+            foreach (var item in lstDonHang)
+            {
+                var dh = item.Object;
+                dh.Id = item.Key;
+                lst.Add(dh);
+            }
+            return View(lst);
         }
 
         public async Task<ActionResult> AddOrderDetail(string proId, string strUrl)
         {
-            var p = await DatabaseUtils.GetElementByKey<SanPham>("SanPham", proId);
+            var p = await DatabaseUtils.GetElementByKey<SanPham>(TableCategory.SanPham, proId);
             if (p == null)
             {
                 Response.StatusCode = 400;
@@ -43,19 +52,24 @@ namespace ShipperManager.Controllers
 
         private List<ChiTietDonHang> GetOrderDetailt()
         {
-            List<ChiTietDonHang> lst = Session["OrderDetail"] as List<ChiTietDonHang>;
+            List<ChiTietDonHang> lst = Session[OrderDetailSessionName] as List<ChiTietDonHang>;
             if(lst == null)
             {
                 lst = new List<ChiTietDonHang>();
-                Session["OrderDetail"] = lst;
+                Session[OrderDetailSessionName] = lst;
             }
             return lst;
+        }
+
+        private void ClearOrderDetail()
+        {
+            Session[OrderDetailSessionName] = null;
         }
 
         private int QuantitySum()
         {
             int sum = 0;
-            var lst = Session["OrderDetail"] as List<ChiTietDonHang>;
+            var lst = Session[OrderDetailSessionName] as List<ChiTietDonHang>;
             if (lst != null)
             {
                 sum = lst.Sum(i => i.SoLuong);
@@ -82,23 +96,29 @@ namespace ShipperManager.Controllers
         // GET: DonHang/Create
         public ActionResult Create()
         {
-            DonHangViewModel vm = new DonHangViewModel();
+            var lst = GetOrderDetailt();
+            DonHangViewModel vm = new DonHangViewModel(lst);
             return View(vm);
         }
 
         // POST: DonHang/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(DonHangViewModel donHangViewModel)
         {
             try
             {
                 string id = Session["maNhanVien"].ToString();
-
+                var lstDetail = GetOrderDetailt();
+                donHangViewModel.MaNhanVien = id;
+                donHangViewModel.OrderDetailListItem = lstDetail;
+                DonHang dh = donHangViewModel.GetDonHang();
+                await DatabaseUtils.AddElement(TableCategory.DonHang, dh);
+                ClearOrderDetail();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception)
             {
-                return View();
+                return View(donHangViewModel);
             }
         }
 

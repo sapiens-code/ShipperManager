@@ -8,10 +8,8 @@ namespace ShipperManager.Models
 {
     public class ChiTietDonHang
     {
-        public string Id { get; set; }
         public string Ten { get; set; }
         public string MaSanPham { get; set; }
-        public string MaDonHang { get; set; }
         public int SoLuong { get; set; }
 
         public ChiTietDonHang(SanPham sp)

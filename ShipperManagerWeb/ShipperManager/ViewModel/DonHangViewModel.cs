@@ -19,38 +19,31 @@ namespace ShipperManager.ViewModel
 
         public IEnumerable<SelectListItem> KhachHangListItem { get; set; }
         public IEnumerable<SelectListItem> PaymentMethodListItem { get; set; }
-        public IEnumerable<ChiTietDonHang> OrderDetailListItem { get; set; }
+        public List<ChiTietDonHang> OrderDetailListItem { get; set; }
 
-        public DonHangViewModel()
+        public DonHangViewModel(List<ChiTietDonHang> orderDetailList)
         {
             Task.Run(() => InitKhachHangList()).Wait();
             Task.Run(() => InitPaymentMethodgList()).Wait();
-            OrderDetailListItem = new List<ChiTietDonHang>()
-            {
-                new ChiTietDonHang()
-                {
-                    Id = "123",
-                    MaDonHang = "123",
-                    MaSanPham = "123",
-                    Ten = "so long",
-                    SoLuong = 1
-                },
-                new ChiTietDonHang()
-                {
-                    Id = "123",
-                    MaDonHang = "123",
-                    MaSanPham = "123",
-                    Ten = "so huyet",
-                    SoLuong = 1
-                }
-            };
+            OrderDetailListItem = orderDetailList;
             NgayTao = DateTime.Now;
+            TrangThai = false;
+        }
+
+        public DonHangViewModel()
+        {
+
+        }
+
+        public DonHang GetDonHang()
+        {
+            return new DonHang(MaNhanVien, MaKhachHang, NgayTao, TrangThai,MaPhuongThucThanhToan, OrderDetailListItem);
         }
 
         private async Task InitKhachHangList()
         {
             var lst = new List<SelectListItem>();
-            var customers = await DatabaseUtils.GetAllElement<KhachHang>("KhachHang");
+            var customers = await DatabaseUtils.GetAllElement<KhachHang>(TableCategory.KhachHang);
             foreach (var item in customers)
             {
                 var kh = item.Object;
@@ -68,7 +61,7 @@ namespace ShipperManager.ViewModel
         private async Task InitPaymentMethodgList()
         {
             var lst = new List<SelectListItem>();
-            var elements = await DatabaseUtils.GetAllElement<PhuongThucThanhToan>("PhuongThucThanhToan");
+            var elements = await DatabaseUtils.GetAllElement<PhuongThucThanhToan>(TableCategory.PhuongThucThanhToan);
             foreach (var item in elements)
             {
                 var kh = item.Object;

@@ -8,6 +8,8 @@ using System.Web;
 
 namespace ShipperManager.Models
 {
+
+
     public class DatabaseUtils
     {
         private static string firebaseUrl = "https://shippermanager-be26e-default-rtdb.firebaseio.com/";
