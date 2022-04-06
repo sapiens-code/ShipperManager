@@ -1,7 +1,6 @@
-package com.example.shippermanager;
+package com.example.shippermanager.Order;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shippermanager.Model.Order;
+import com.example.shippermanager.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,17 +43,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
         //Trả về 1 item tại vị trí position(vị trí hiện tại theo list)
         Order gh = list.get(position);
         //Set tiêu đề
-        holder.ma.setText(gh.getMa());
-        holder.monHang.setText(gh.getMonHang());
-        holder.diaChi.setText(gh.getDiaChi());
+        holder.ma.setText(gh.Id);
+        holder.monHang.setText(gh.MaKhachHang);
+        holder.diaChi.setText(gh.MaPhuongThucThanhToan);
         NumberFormat currentLocale = NumberFormat.getInstance();
-        String str = currentLocale.format(gh.getTongTien());
-        holder.tongTien.setText(str + "đ");
+        //String str = currentLocale.format(gh.getTongTien());
+        holder.tongTien.setText("13.000");
 
-        holder.view.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
-        });
+//        holder.view.setOnClickListener(v -> {
+//            Intent intent = new Intent(context, MainActivity.class);
+//            context.startActivity(intent);
+//        });
     }
 
     @Override

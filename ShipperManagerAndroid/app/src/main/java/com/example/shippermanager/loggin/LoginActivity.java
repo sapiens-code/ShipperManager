@@ -8,27 +8,31 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.example.shippermanager.MainActivity;
-import com.example.shippermanager.OrderListActivity;
+import com.example.shippermanager.Model.Shipper;
+import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginAvtivity extends AppCompatActivity implements LoginInContract.View, View.OnClickListener {
+import java.util.Calendar;
+
+public class LoginActivity extends AppCompatActivity implements LoginInContract.View, View.OnClickListener {
 
     private TextInputEditText textUsername;
     private TextInputEditText textPassword;
     private Button buttonLogin;
+    private Button buttonRegister;
     private SingInPresenter singInPresenter;
+    private DatabaseReference Database;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Database = FirebaseDatabase.getInstance().getReference();
         initView();
         registerListener();
         initPresenter();
@@ -39,10 +43,13 @@ public class LoginAvtivity extends AppCompatActivity implements LoginInContract.
         textPassword = findViewById(R.id.text_password);
         textUsername = findViewById(R.id.text_username);
         buttonLogin = findViewById(R.id.btnDangNhap);
+        buttonRegister = findViewById(R.id.btnDangKy);
     }
 
     private void registerListener(){
+
         buttonLogin.setOnClickListener(this);
+        buttonRegister.setOnClickListener(this);
     }
 
     private void initPresenter(){
@@ -57,6 +64,9 @@ public class LoginAvtivity extends AppCompatActivity implements LoginInContract.
             case R.id.btnDangNhap:
                 login();
                 break;
+            case R.id.btnDangKy:
+                Register();
+                break;
             default:
                 break;
 
@@ -64,10 +74,22 @@ public class LoginAvtivity extends AppCompatActivity implements LoginInContract.
         }
     }
 
+    private void Register()
+    {
+        Calendar car =  Calendar.getInstance();
+        car.set(Calendar.YEAR,1999);
+        car.set(Calendar.MONTH,10);
+        car.set(Calendar.DAY_OF_MONTH,20);
+        String key = Database.child("Shipper").push().getKey();
+        Shipper shipper = new Shipper(key,"hy",car.getTimeInMillis(),"Kien Giang",true,"admin","admin");
+        Database.child("Shipper").child(key).setValue(shipper);
+    }
+
     private void login()
     {
         String username = textUsername.getText().toString();
         String password = textPassword.getText().toString();
+
         if(username.isEmpty() || password.isEmpty())
         {
             Toast.makeText(this,"username or password is empty",Toast.LENGTH_SHORT).show();
@@ -84,6 +106,6 @@ public class LoginAvtivity extends AppCompatActivity implements LoginInContract.
 
     @Override
     public void loginInFailure(String error) {
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
     }
 }

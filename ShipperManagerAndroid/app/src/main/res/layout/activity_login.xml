@@ -63,6 +63,15 @@
             android:text="ĐĂNG NHẬP"
             android:textColor="@color/white"
             android:textStyle="bold" />
+        <android.widget.Button
+            android:id="@+id/btnDangKy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkbox"
+            android:padding="10dp"
+            android:text="ĐĂNG KÝ"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>
