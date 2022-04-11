@@ -44,10 +44,8 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
         Order gh = list.get(position);
         //Set tiêu đề
         holder.ma.setText(gh.Id);
-        holder.monHang.setText(gh.MaKhachHang);
+        holder.khachHang.setText(gh.MaKhachHang);
         holder.diaChi.setText(gh.MaPhuongThucThanhToan);
-        NumberFormat currentLocale = NumberFormat.getInstance();
-        //String str = currentLocale.format(gh.getTongTien());
         holder.tongTien.setText("13.000");
 
 //        holder.view.setOnClickListener(v -> {
@@ -62,7 +60,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView ma, monHang,diaChi,tongTien;
+        TextView ma, khachHang,diaChi,tongTien;
         View view;
 
         public ViewHolder(@NonNull View itemView) {
@@ -70,7 +68,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
             //Khai báo id theo itemView
             ma = itemView.findViewById(R.id.ma_don_hang);
             diaChi = itemView.findViewById(R.id.dia_chi);
-            monHang = itemView.findViewById(R.id.mon_hang);
+            khachHang = itemView.findViewById(R.id.khach_hang);
             tongTien = itemView.findViewById(R.id.tong_tien);
             view = itemView;
         }
