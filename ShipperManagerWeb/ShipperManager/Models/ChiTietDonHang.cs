@@ -8,30 +8,25 @@ namespace ShipperManager.Models
 {
     public class ChiTietDonHang
     {
-        public string Ten { get; set; }
-        public string MaSanPham { get; set; }
+
         public int SoLuong { get; set; }
+        public SanPham SanPham { get; set; }
 
         public ChiTietDonHang(SanPham sp)
         {
-            Ten = sp.Ten;
-            MaSanPham = sp.Id;
+
             SoLuong = 1;
+            SanPham = sp;
         }
 
         public ChiTietDonHang()
         {
         }
 
-        private async Task InitAsync(string id)
+        public decimal GetTongTien()
         {
-            var p = await DatabaseUtils.GetElementByKey<SanPham>("SanPham", id);
-            if(p != null)
-            {
-                Ten = p.Object.Ten;
-                MaSanPham = id;
-                SoLuong = 1;
-            }
+            return SanPham.Gia * SoLuong;
         }
+
     }
 }

@@ -2,14 +2,13 @@ package com.example.shippermanager.Order;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shippermanager.Model.Order;
+import com.example.shippermanager.Model.DonHang;
 import com.example.shippermanager.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,10 +20,9 @@ import java.util.ArrayList;
 
 public class OrderListActivity extends AppCompatActivity {
 
-    private ArrayList<Order> OrderList = new ArrayList<>();
+    private ArrayList<DonHang> OrderList = new ArrayList<>();
     DonHangAdapter adapter;
     private RecyclerView recyclerView;
-    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class OrderListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child: snapshot.getChildren()) {
-                    Order o = child.getValue(Order.class);
+                    DonHang o = child.getValue(DonHang.class);
                     o.Id = child.getKey();
                     OrderList.add(o);
                     adapter.notifyItemInserted(OrderList.size() -1);

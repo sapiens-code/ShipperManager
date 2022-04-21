@@ -12,11 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
+import com.example.shippermanager.menu.MenuActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity implements LoginInContract.View, View.OnClickListener {
 
@@ -100,8 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
 
     @Override
     public void loginInSuccess() {
-        Toast.makeText(this,"Loggin is success",Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, OrderListActivity.class));
+        startActivity(new Intent(this, MenuActivity.class));
     }
 
     @Override

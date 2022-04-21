@@ -35,7 +35,7 @@ namespace ShipperManager.Controllers
                 return null;
             }
             List<ChiTietDonHang> orderDetails = GetOrderDetailt();
-            var detail = orderDetails.FirstOrDefault(x => x.MaSanPham.Equals(proId));
+            var detail = orderDetails.FirstOrDefault(x => x.SanPham.Id.Equals(proId));
             if(detail == null)
             {
                 p.Object.Id = p.Key;
@@ -111,7 +111,8 @@ namespace ShipperManager.Controllers
                 var lstDetail = GetOrderDetailt();
                 donHangViewModel.MaNhanVien = id;
                 donHangViewModel.OrderDetailListItem = lstDetail;
-                DonHang dh = donHangViewModel.GetDonHang();
+
+                DonHang dh = await donHangViewModel.GetDonHang();
                 await DatabaseUtils.AddElement(TableCategory.DonHang, dh);
                 ClearOrderDetail();
                 return RedirectToAction("Index");

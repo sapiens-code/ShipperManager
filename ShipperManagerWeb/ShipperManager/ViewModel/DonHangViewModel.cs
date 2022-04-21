@@ -35,9 +35,11 @@ namespace ShipperManager.ViewModel
 
         }
 
-        public DonHang GetDonHang()
+        public async Task<DonHang> GetDonHang()
         {
-            return new DonHang(MaNhanVien, MaKhachHang, NgayTao, TrangThai,MaPhuongThucThanhToan, OrderDetailListItem);
+            var created = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var kh = await DatabaseUtils.GetElementByKey<KhachHang>("KhachHang", MaKhachHang);
+            return new DonHang(MaNhanVien, MaKhachHang, created, TrangThai,MaPhuongThucThanhToan, OrderDetailListItem,kh.Object.DiaChi);
         }
 
         private async Task InitKhachHangList()

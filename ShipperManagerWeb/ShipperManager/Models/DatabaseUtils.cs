@@ -12,11 +12,11 @@ namespace ShipperManager.Models
 
     public class DatabaseUtils
     {
-        private static string firebaseUrl = "https://shippermanager-be26e-default-rtdb.firebaseio.com/";
+        private static string FirebaseUrl = "https://shippermanager-be26e-default-rtdb.firebaseio.com/";
 
         public static async Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllElement<T>(string path)
         {
-            var firebaseClient = new FirebaseClient(firebaseUrl);
+            var firebaseClient = new FirebaseClient(FirebaseUrl);
             return await firebaseClient
               .Child(path)
               .OnceAsync<T>();
@@ -25,7 +25,7 @@ namespace ShipperManager.Models
 
         public static async Task<FirebaseObject<T>> AddElement<T>(string path,T element)
         {
-            var firebaseClient = new FirebaseClient(firebaseUrl);
+            var firebaseClient = new FirebaseClient(FirebaseUrl);
             return await firebaseClient
               .Child(path)
               .PostAsync(element);
@@ -33,7 +33,7 @@ namespace ShipperManager.Models
 
         public static async Task<FirebaseObject<T>> GetElementByKey<T>(string path,string key)
         {
-            var firebaseClient = new FirebaseClient(firebaseUrl);
+            var firebaseClient = new FirebaseClient(FirebaseUrl);
             var lst = await firebaseClient
               .Child(path)
               .OrderByKey()
