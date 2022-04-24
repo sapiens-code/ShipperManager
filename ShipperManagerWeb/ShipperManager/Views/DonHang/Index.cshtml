@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ShipperManager.Models.DonHang>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Người Tạo
+        </th>
+        <th>
+            Khách hàng
+        </th>
+        <th>
+            Ngày Tạo
+        </th>
+        <th>
+            Trạng Thái Giao
+        </th>
+        <th>
+            Phương Thức Thanh Toán
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NhanVien.Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhachHang.Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayTao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThaiGiao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhuongThucThanhToan.Ten)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
