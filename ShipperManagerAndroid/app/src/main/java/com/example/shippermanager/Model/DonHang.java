@@ -6,16 +6,20 @@ import java.util.List;
 
 public class DonHang {
     public String Id;
-    public String MaKhachHang;
-    public String MaNhanVien;
-    public String MaPhuongThucThanhToan;
+    public KhachHang KhachHang;
+    public NhanVien NhanVien;
     public String NgayTao;
-    public boolean TrangThaiGiao;
-    public String DiaChi;
+    public int TrangThaiGiao;
+    public PhuongThucThanhToan PhuongThucThanhToan;
     public double TongTien;
     public List<ChiTietDonHang> DanhSachCTTT = new ArrayList<>();
+    public double KhoanCach;
+    public String NgayGiao;
+    public double PhiGiaoHang;
+    public Shipper Shipper;
 
     public DonHang() {
+
     }
 
 }

@@ -38,8 +38,10 @@ namespace ShipperManager.ViewModel
         public async Task<DonHang> GetDonHang()
         {
             var created = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var kh = await DatabaseUtils.GetElementByKey<KhachHang>("KhachHang", MaKhachHang);
-            return new DonHang(MaNhanVien, MaKhachHang, created, TrangThai,MaPhuongThucThanhToan, OrderDetailListItem,kh.Object.DiaChi);
+            var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, MaKhachHang);
+            var pttt = await DatabaseUtils.GetElementByKey<PhuongThucThanhToan>(TableCategory.PhuongThucThanhToan, MaPhuongThucThanhToan);
+            var nv = await DatabaseUtils.GetElementByKey<NhanVien>(TableCategory.NhanVien, MaNhanVien);
+            return new DonHang(nv.Object, kh.Object, created, TrangThai, pttt.Object, OrderDetailListItem,13,25000);
         }
 
         private async Task InitKhachHangList()
@@ -66,12 +68,12 @@ namespace ShipperManager.ViewModel
             var elements = await DatabaseUtils.GetAllElement<PhuongThucThanhToan>(TableCategory.PhuongThucThanhToan);
             foreach (var item in elements)
             {
-                var kh = item.Object;
-                kh.Id = item.Key;
+                var pttt = item.Object;
+                pttt.Id = item.Key;
                 var selectItem = new SelectListItem()
                 {
-                    Text = kh.Ten,
-                    Value = kh.Id
+                    Text = pttt.Ten,
+                    Value = pttt.Id
                 };
                 lst.Add(selectItem);
             }

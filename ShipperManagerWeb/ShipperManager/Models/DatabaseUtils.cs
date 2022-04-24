@@ -41,5 +41,13 @@ namespace ShipperManager.Models
               .OnceAsync<T>();
             return lst.FirstOrDefault();
         }
+
+        public static async Task DeleteElement(string path, string key)
+        {
+            var firebaseClient = new FirebaseClient(FirebaseUrl);
+            await firebaseClient
+              .Child(path)
+              .Child(key).DeleteAsync();
+        }
     }
 }

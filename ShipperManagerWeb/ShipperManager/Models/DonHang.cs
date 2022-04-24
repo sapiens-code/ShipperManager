@@ -5,29 +5,38 @@ using System.Web;
 
 namespace ShipperManager.Models
 {
+    public enum TrangThaiDonHang
+    {
+        DangTim,DangGiao,DaGiao
+    }
     public class DonHang
     {
         public string Id { get; set; }
-        public string MaNhanVien { get; set; }
-        public string MaKhachHang { get; set; }
+        public NhanVien NhanVien { get; set; }
+        public KhachHang KhachHang { get; set; }
         public string NgayTao { get; set; }
-        public bool TrangThaiGiao { get; set; }
-        public string MaPhuongThucThanhToan { get; set; }
-        public string DiaChi { get; set; }
+        public TrangThaiDonHang TrangThaiGiao { get; set; }
+        public PhuongThucThanhToan PhuongThucThanhToan { get; set; }
         public decimal TongTien { get; set; } = 0;
         public List<ChiTietDonHang> DanhSachCTTT { get; set; } = new List<ChiTietDonHang>();
+        public double KhoanCach { get; set; }
+        public string NgayGiao { get; set; }
+        public decimal PhiGiaoHang { get; set; }
+        public Shipper Shipper { get; set; }
 
-        public DonHang(string maNhanVien, string maKhachHang, string ngayTao, bool trangThaiGiao,string maPhuongThucThanhToan,List<ChiTietDonHang> cttt,string diaChi)
+        public DonHang(NhanVien nhanVien, KhachHang khachHang, string ngayTao, bool trangThaiGiao, PhuongThucThanhToan phuongThucThanhToan,List<ChiTietDonHang> cttt,double khoanCanh,decimal phiGiaoHang)
         {
-            MaNhanVien = maNhanVien;
-            MaKhachHang = maKhachHang;
+            NhanVien = nhanVien;
+            KhachHang = khachHang;
             NgayTao = ngayTao;
-            TrangThaiGiao = trangThaiGiao;
-            MaPhuongThucThanhToan = maPhuongThucThanhToan;
+            TrangThaiGiao = TrangThaiDonHang.DangTim;
+            PhuongThucThanhToan = phuongThucThanhToan;
             DanhSachCTTT = cttt;
-            DiaChi = diaChi;
-
             foreach (var item in DanhSachCTTT) TongTien += item.GetTongTien();
+            Shipper = null;
+            NgayGiao = string.Empty;
+            KhoanCach = khoanCanh;
+            PhiGiaoHang = phiGiaoHang;
             
         }
 

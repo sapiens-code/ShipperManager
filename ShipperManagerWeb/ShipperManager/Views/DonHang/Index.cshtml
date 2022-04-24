@@ -12,19 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MaNhanVien)
+            Người Tạo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaKhachHang)
+            Khách hàng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NgayTao)
+            Ngày Tạo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TrangThaiGiao)
+            Trạng Thái Giao
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaPhuongThucThanhToan)
+            Phương Thức Thanh Toán
         </th>
         <th></th>
     </tr>
@@ -32,10 +32,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.MaNhanVien)
+            @Html.DisplayFor(modelItem => item.NhanVien.Ten)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MaKhachHang)
+            @Html.DisplayFor(modelItem => item.KhachHang.Ten)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NgayTao)
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.TrangThaiGiao)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MaPhuongThucThanhToan)
+            @Html.DisplayFor(modelItem => item.PhuongThucThanhToan.Ten)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

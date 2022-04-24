@@ -146,9 +146,10 @@ namespace ShipperManager.Controllers
         }
 
         // GET: DonHang/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            return View();
+            await DatabaseUtils.DeleteElement(TableCategory.DonHang, id);
+            return RedirectToAction("Index");
         }
 
         // POST: DonHang/Delete/5

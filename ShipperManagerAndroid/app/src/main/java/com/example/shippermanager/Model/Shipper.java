@@ -1,7 +1,5 @@
 package com.example.shippermanager.Model;
 
-import java.util.Date;
-
 public class Shipper {
 
     private String ten;
@@ -71,15 +69,6 @@ public class Shipper {
 
     public Shipper(String id, String ten, long ngaySinh, String queQuan, boolean gioiTinh, String taiKhoan, String matKhau) {
         this.id = id;
-        this.ten = ten;
-        this.ngaySinh = ngaySinh;
-        this.queQuan = queQuan;
-        this.gioiTinh = gioiTinh;
-        this.taiKhoan = taiKhoan;
-        this.matKhau = matKhau;
-    }
-
-    public Shipper(String ten, long ngaySinh, String queQuan, boolean gioiTinh, String taiKhoan, String matKhau) {
         this.ten = ten;
         this.ngaySinh = ngaySinh;
         this.queQuan = queQuan;

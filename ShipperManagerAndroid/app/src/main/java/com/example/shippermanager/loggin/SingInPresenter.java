@@ -13,9 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SingInPresenter implements LoginInContract.Presenter {
 
-
     private LoginInContract.View View;
-
     public void setView(LoginInContract.View view)
     {
         View = view;

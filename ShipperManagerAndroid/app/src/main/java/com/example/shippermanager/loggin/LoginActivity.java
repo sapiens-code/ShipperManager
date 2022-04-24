@@ -1,11 +1,14 @@
 package com.example.shippermanager.loggin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +17,12 @@ import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
 import com.example.shippermanager.menu.MenuActivity;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -98,7 +105,37 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
             Toast.makeText(this,"username or password is empty",Toast.LENGTH_SHORT).show();
             return;
         }
-        singInPresenter.handleSingIn(username,password);
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = database.child("Shipper");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child: snapshot.getChildren()) {
+                    Shipper s = child.getValue(Shipper.class);
+                    if(username.equals(s.getTaiKhoan())&&password.equals(s.getMatKhau()))
+                    {
+                        String MY_PREFS_NAME = "MyPrefsFile";
+                        SharedPreferences mPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(s);
+                        prefsEditor.putString("Shipper", json);
+                        prefsEditor.commit();
+                        loginInSuccess();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("error", "Failed to read value.", error.toException());
+            }
+        });
+
+        //View.loginInFailure("Username or Password not true");
+        //singInPresenter.handleSingIn(username,password);
     }
 
     @Override

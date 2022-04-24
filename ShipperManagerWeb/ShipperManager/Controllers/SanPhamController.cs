@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace ShipperManager.Controllers
 {
-    public class ProductController : Controller
+    public class SanPhamController : Controller
     {
         private static string ApiKey = "AIzaSyDydtdaqFseP31FMEtLQDqiUWT-8yyGq1Y";
         private static string Bucket = "shippermanager-be26e.appspot.com";
@@ -133,25 +133,11 @@ namespace ShipperManager.Controllers
         }
 
         // GET: Product/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string ma)
         {
-            return View();
+            await DatabaseUtils.DeleteElement(TableCategory.SanPham, ma);
+            return RedirectToAction("Index");
         }
 
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
