@@ -51,7 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initView()
     {
         textPassword = findViewById(R.id.text_password);
+        textPassword.setText("admin");
         textUsername = findViewById(R.id.text_username);
+        textUsername.setText("admin");
         buttonLogin = findViewById(R.id.btnDangNhap);
         buttonRegister = findViewById(R.id.btnDangKy);
     }

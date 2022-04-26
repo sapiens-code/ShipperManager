@@ -164,4 +164,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_show_order_dia_chi"
         app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:background="@color/text_light_background"
+        android:layout_width="405dp"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <TextView
+            android:id="@+id/txt_show_order_ten_kh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:text="Lâm Minh Hy"
+            />
+
+        <TextView
+            android:id="@+id/txt_show_order_sdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="center_vertical"
+            android:text="01674275557"
+            />
+
+        <ImageButton
+
+            android:id="@+id/btn_show_order_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/text_light_background"
+            app:srcCompat="@drawable/call"
+
+            />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

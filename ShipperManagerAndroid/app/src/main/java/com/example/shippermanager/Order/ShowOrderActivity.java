@@ -1,10 +1,12 @@
 package com.example.shippermanager.Order;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,8 +35,12 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
     private TextView txtThuHo;
     private TextView txtLoTrinh;
     private TextView txtDiaChi;
+    private TextView txtTenKh;
+    private TextView txtSdt;
+
     private Button btnHuyDon;
     private Button btnXemMap;
+    private ImageButton btnCall;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -59,6 +65,7 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
 
         btnHuyDon.setOnClickListener(this);
         btnXemMap.setOnClickListener(this);
+        btnCall.setOnClickListener(this);
     }
 
     private void initView()
@@ -68,8 +75,12 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         txtThuHo = findViewById(R.id.txt_show_order_thu_ho);
         txtLoTrinh = findViewById(R.id.txt_show_order_lo_trinh);
         txtDiaChi = findViewById(R.id.txt_show_order_dia_chi);
+        txtTenKh = findViewById(R.id.txt_show_order_ten_kh);
+        txtSdt = findViewById(R.id.txt_show_order_sdt);
+
         btnHuyDon = findViewById(R.id.btn_show_order_huy_don);
         btnXemMap = findViewById(R.id.btn_show_order_xem_map);
+        btnCall = findViewById(R.id.btn_show_order_call);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -92,6 +103,8 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
                             txtThuHo.setText(format.format(DonHang.TongTien));
                             txtLoTrinh.setText(String.valueOf(DonHang.KhoanCach)+"km");
                             txtDiaChi.setText(DonHang.KhachHang.DiaChi);
+                            txtTenKh.setText(DonHang.KhachHang.Ten);
+                            txtSdt.setText(DonHang.KhachHang.SoDienThoai);
                             return;
                         }
                     }
@@ -115,11 +128,22 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
             case R.id.btn_show_order_xem_map:
                 ViewMap();
                 break;
+            case R.id.btn_show_order_call:
+                CallCustomer();
+                        break;
             default:
                 break;
 
 
         }
+    }
+
+    private void CallCustomer()
+    {
+        Intent i = new Intent(Intent.ACTION_DIAL);
+        String p = "tel:" + DonHang.KhachHang.SoDienThoai;
+        i.setData(Uri.parse(p));
+        startActivity(i);
     }
 
     private void ViewMap()
