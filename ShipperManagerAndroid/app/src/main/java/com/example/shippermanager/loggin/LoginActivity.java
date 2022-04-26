@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.shippermanager.Model.HelperUtils;
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
@@ -28,13 +29,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class LoginActivity extends AppCompatActivity implements LoginInContract.View, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextInputEditText textUsername;
     private TextInputEditText textPassword;
     private Button buttonLogin;
     private Button buttonRegister;
-    private SingInPresenter singInPresenter;
     private DatabaseReference Database;
 
     @Override
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
         Database = FirebaseDatabase.getInstance().getReference();
         initView();
         registerListener();
-        initPresenter();
+
     }
 
     private void initView()
@@ -62,10 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
         buttonRegister.setOnClickListener(this);
     }
 
-    private void initPresenter(){
-        singInPresenter = new SingInPresenter();
-        singInPresenter.setView(this);
-    }
 
     @Override
     public void onClick(View v) {
@@ -115,14 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
                     Shipper s = child.getValue(Shipper.class);
                     if(username.equals(s.getTaiKhoan())&&password.equals(s.getMatKhau()))
                     {
-                        String MY_PREFS_NAME = "MyPrefsFile";
-                        SharedPreferences mPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                        Gson gson = new Gson();
-                        String json = gson.toJson(s);
-                        prefsEditor.putString("Shipper", json);
-                        prefsEditor.commit();
-                        loginInSuccess();
+                        loginInSuccess(s);
                         return;
                     }
                 }
@@ -134,17 +123,14 @@ public class LoginActivity extends AppCompatActivity implements LoginInContract.
             }
         });
 
-        //View.loginInFailure("Username or Password not true");
-        //singInPresenter.handleSingIn(username,password);
+        Toast.makeText(getBaseContext(),"login failure, username or password incorrect",Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void loginInSuccess() {
+    public void loginInSuccess(Shipper s) {
+        Gson gson = new Gson();
+        String json = gson.toJson(s);
+        HelperUtils.AddSharedObject(this,json,"Shipper");
         startActivity(new Intent(this, MenuActivity.class));
     }
 
-    @Override
-    public void loginInFailure(String error) {
-        Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
-    }
 }

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ShipperManager.Controllers
 {
-    public class CustomerController : Controller
+    public class KhachHangController : Controller
     {
         // GET: Customer
         public async Task<ActionResult> Index()
@@ -55,9 +55,10 @@ namespace ShipperManager.Controllers
         }
 
         // GET: Customer/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string ma)
         {
-            return View();
+            var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, ma);
+            return View(kh);
         }
 
         // POST: Customer/Edit/5

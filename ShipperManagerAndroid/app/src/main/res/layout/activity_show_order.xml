@@ -64,10 +64,12 @@
         android:id="@+id/txt_show_order_tong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginLeft="268dp"
+        android:layout_marginStart="248dp"
+        android:layout_marginLeft="248dp"
         android:layout_marginTop="52dp"
         android:text="350.000đ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,16 +108,17 @@
         android:layout_marginLeft="4dp"
         android:layout_marginTop="32dp"
         android:text="Lộ Trình 13,2km"
-        app:layout_constraintEnd_toStartOf="@+id/textView12"
+
         app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <TextView
-        android:id="@+id/textView12"
+    <android.widget.Button
+        android:id="@+id/btn_show_order_xem_map"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
         android:text="xem bản đồ"
         app:layout_constraintEnd_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
