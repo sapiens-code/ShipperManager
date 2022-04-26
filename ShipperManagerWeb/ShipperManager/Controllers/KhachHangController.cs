@@ -55,23 +55,39 @@ namespace ShipperManager.Controllers
         }
 
         // GET: Customer/Edit/5
-        public async Task<ActionResult> Edit(string ma)
+        public async Task<ActionResult> Edit(string id)
         {
-            var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, ma);
-            return View(kh);
+            var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, id);
+            return View(kh.Object);
         }
 
         // POST: Customer/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(string id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                var fireObj = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, id);
+                var kh = fireObj.Object;
+                kh.Id = fireObj.Key;
+                kh.Ten = collection["Ten"];
+                kh.DiaChi = collection["DiaChi"];
+                kh.SoDienThoai = collection["SoDienThoai"];
+                await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh, kh.Id);
+
+                foreach(var item in await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang))
+                {
+                    var dh = item.Object;
+                    if(dh.KhachHang.Id.Equals(id))
+                    {
+                        dh.KhachHang = kh;
+                        await DatabaseUtils.UpdateElementByKey<DonHang>(TableCategory.DonHang, dh, dh.Id);
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
