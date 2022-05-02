@@ -1,29 +1,29 @@
 ﻿@model IEnumerable<ShipperManager.Models.SanPham>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Sản Phẩm";
 }
 
-<h2>Sản Phẩm</h2>
+<h2>Quản Lý Sản Phẩm</h2>
 <p>
     @Html.ActionLink("Thêm Mới", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+           ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Ten)
+           Tên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gia)
+           Giá
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MoTa)
+           Mô Tả
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
+           Đường Dẫn Ảnh
         </th>
     </tr>
     @foreach (var item in Model)
@@ -46,7 +46,6 @@
             </td>
             <td>
                 @Html.ActionLink("Chỉnh Sửa", "Edit", new { ma = item.Id },new { @class = "btn btn-info" }) <br />
-                @Html.ActionLink("Chi Tiết", "Details", new { ma = item.Id }, new { @class = "btn btn-info" }) <br />
                 @Html.ActionLink("Xóa", "Delete", new { ma = item.Id }, new { @class = "btn btn-info" }) <br />
                 <a class="btn btn-info" href="@Url.Action("AddOrderDetail","DonHang",new {@ProID = item.Id, @strURL = Request.Url.ToString()})">
                     Thêm Vào Đơn Hàng

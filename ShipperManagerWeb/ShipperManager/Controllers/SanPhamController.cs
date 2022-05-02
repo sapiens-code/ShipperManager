@@ -64,7 +64,9 @@ namespace ShipperManager.Controllers
                     string link = await Upload(stream, fileName);
                     product.ImagePath = link;
                     //update product object
-                    await DatabaseUtils.AddElement("SanPham", product);
+                    var obj = await DatabaseUtils.AddElement("SanPham", product);
+                    obj.Object.Id = obj.Key;
+                    await DatabaseUtils.UpdateElementByKey(TableCategory.SanPham, obj.Object, obj.Key);
                 }
 
                 return RedirectToAction("Index");

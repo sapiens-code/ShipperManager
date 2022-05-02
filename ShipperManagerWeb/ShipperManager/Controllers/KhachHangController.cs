@@ -27,12 +27,6 @@ namespace ShipperManager.Controllers
             return View(lst);
         }
 
-        // GET: Customer/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: Customer/Create
         public ActionResult Create()
         {
@@ -45,7 +39,9 @@ namespace ShipperManager.Controllers
         {
             try
             {
-                await DatabaseUtils.AddElement("KhachHang", customer);
+                var kh = await DatabaseUtils.AddElement(TableCategory.KhachHang, customer);
+                kh.Object.Id = kh.Key;
+                await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh.Object, kh.Key);
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -65,54 +61,34 @@ namespace ShipperManager.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(string id, FormCollection collection)
         {
-            try
-            {
-                var fireObj = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, id);
-                var kh = fireObj.Object;
-                kh.Id = fireObj.Key;
-                kh.Ten = collection["Ten"];
-                kh.DiaChi = collection["DiaChi"];
-                kh.SoDienThoai = collection["SoDienThoai"];
-                await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh, kh.Id);
+            var fireObj = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, id);
+            var kh = fireObj.Object;
+            kh.Id = fireObj.Key;
+            kh.Ten = collection["Ten"];
+            kh.DiaChi = collection["DiaChi"];
+            kh.SoDienThoai = collection["SoDienThoai"];
+            await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh, kh.Id);
 
-                foreach(var item in await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang))
+            foreach (var item in await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang))
+            {
+                var dh = item.Object;
+                dh.Id = item.Key;
+                if (dh.KhachHang.Id.Equals(id))
                 {
-                    var dh = item.Object;
-                    if(dh.KhachHang.Id.Equals(id))
-                    {
-                        dh.KhachHang = kh;
-                        await DatabaseUtils.UpdateElementByKey<DonHang>(TableCategory.DonHang, dh, dh.Id);
-                    }
+                    dh.KhachHang = kh;
+                    await DatabaseUtils.UpdateElementByKey(TableCategory.DonHang, dh, dh.Id);
                 }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch(Exception ex)
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         // GET: Customer/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            return View();
+            await DatabaseUtils.DeleteElement(TableCategory.KhachHang, id);
+            return RedirectToAction("Index");
         }
 
-        // POST: Customer/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

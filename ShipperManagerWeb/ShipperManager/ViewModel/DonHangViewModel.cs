@@ -1,10 +1,13 @@
 ﻿using ShipperManager.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace ShipperManager.ViewModel
 {
@@ -39,9 +42,39 @@ namespace ShipperManager.ViewModel
         {
             var created = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, MaKhachHang);
+            kh.Object.Id = kh.Key;
             var pttt = await DatabaseUtils.GetElementByKey<PhuongThucThanhToan>(TableCategory.PhuongThucThanhToan, MaPhuongThucThanhToan);
+            pttt.Object.Id = pttt.Key;
             var nv = await DatabaseUtils.GetElementByKey<NhanVien>(TableCategory.NhanVien, MaNhanVien);
-            return new DonHang(nv.Object, kh.Object, created, TrangThai, pttt.Object, OrderDetailListItem,13,25000);
+            pttt.Object.Id = pttt.Key;
+            var dis = GetDrivingDistanceInMiles("12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Thành phố Hồ Chí Minh", kh.Object.DiaChi);
+            return new DonHang(nv.Object, kh.Object, created, TrangThai, pttt.Object, OrderDetailListItem,dis,25000);
+        }
+
+        /// <summary>
+        /// Get Driving Distance In Miles based on Source and Destination.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        public double GetDrivingDistanceInMiles(string origin, string destination)
+        {
+            string url = $"https://maps.googleapis.com/maps/api/distancematrix/xml?units=imperial&origins={origin}&destinations={destination}&key=AIzaSyAQ98LDwfFxMuX46r1us23C2x0g1b6oTy4";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream dataStream = response.GetResponseStream();
+            StreamReader sreader = new StreamReader(dataStream);
+            string responsereader = sreader.ReadToEnd();
+            response.Close();
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(responsereader);
+            if (xmldoc.GetElementsByTagName("status")[0].ChildNodes[0].InnerText == "OK")
+            {
+                XmlNodeList distance = xmldoc.GetElementsByTagName("distance");
+                return Convert.ToDouble(distance[0].ChildNodes[1].InnerText.Replace(" mi", ""));
+            }
+
+            return 0;
         }
 
         private async Task InitKhachHangList()

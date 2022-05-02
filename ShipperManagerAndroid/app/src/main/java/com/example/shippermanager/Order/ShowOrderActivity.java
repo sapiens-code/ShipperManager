@@ -87,10 +87,10 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
             String ma = extras.getString("MaDonHang");
             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
             DatabaseReference ref = database.child("DonHang");
-            //money fotmat
+            //money format
             NumberFormat format = HelperUtils.GetNumberFormat();
 
-            ref.addValueEventListener(new ValueEventListener() {
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot child: snapshot.getChildren()) {
@@ -133,8 +133,6 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
                         break;
             default:
                 break;
-
-
         }
     }
 
@@ -148,7 +146,9 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
 
     private void ViewMap()
     {
-        startActivity(new Intent(this, MapsActivity.class));
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("Address",DonHang.KhachHang.DiaChi);
+        startActivity(intent);
     }
 
     private void CancelOrder()
