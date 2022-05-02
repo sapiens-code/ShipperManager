@@ -18,7 +18,6 @@ namespace ShipperManager.ViewModel
         public string MaKhachHang { get; set; }
         public string MaPhuongThucThanhToan { get; set; }
         public DateTime NgayTao { get; set; }
-        public bool TrangThai { get; set; }
 
         public IEnumerable<SelectListItem> KhachHangListItem { get; set; }
         public IEnumerable<SelectListItem> PaymentMethodListItem { get; set; }
@@ -30,7 +29,6 @@ namespace ShipperManager.ViewModel
             Task.Run(() => InitPaymentMethodgList()).Wait();
             OrderDetailListItem = orderDetailList;
             NgayTao = DateTime.Now;
-            TrangThai = false;
         }
 
         public DonHangViewModel()
@@ -42,13 +40,10 @@ namespace ShipperManager.ViewModel
         {
             var created = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var kh = await DatabaseUtils.GetElementByKey<KhachHang>(TableCategory.KhachHang, MaKhachHang);
-            kh.Object.Id = kh.Key;
             var pttt = await DatabaseUtils.GetElementByKey<PhuongThucThanhToan>(TableCategory.PhuongThucThanhToan, MaPhuongThucThanhToan);
-            pttt.Object.Id = pttt.Key;
             var nv = await DatabaseUtils.GetElementByKey<NhanVien>(TableCategory.NhanVien, MaNhanVien);
-            pttt.Object.Id = pttt.Key;
             var dis = GetDrivingDistanceInMiles("12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Thành phố Hồ Chí Minh", kh.Object.DiaChi);
-            return new DonHang(nv.Object, kh.Object, created, TrangThai, pttt.Object, OrderDetailListItem,dis,25000);
+            return new DonHang(nv.Object, kh.Object, created, pttt.Object, OrderDetailListItem,dis,25000);
         }
 
         /// <summary>

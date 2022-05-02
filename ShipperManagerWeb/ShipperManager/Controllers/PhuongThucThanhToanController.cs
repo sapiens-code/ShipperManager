@@ -42,7 +42,9 @@ namespace ShipperManager.Controllers
         {
             try
             {
-                await DatabaseUtils.AddElement("PhuongThucThanhToan", pttt);
+                var obj = await DatabaseUtils.AddElement("PhuongThucThanhToan", pttt);
+                obj.Object.Id = obj.Key;
+                await DatabaseUtils.UpdateElementByKey(TableCategory.PhuongThucThanhToan, obj.Object, obj.Key);
                 return RedirectToAction("Index");
             }
             catch
@@ -74,9 +76,10 @@ namespace ShipperManager.Controllers
         }
 
         // GET: PhuongThucThanhToan/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            return View();
+            await DatabaseUtils.DeleteElement(TableCategory.PhuongThucThanhToan, id);
+            return RedirectToAction("Index");
         }
 
         // POST: PhuongThucThanhToan/Delete/5

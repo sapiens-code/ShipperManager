@@ -17,26 +17,16 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaKhachHang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Khách Hàng</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.MaKhachHang, new SelectList(Model.KhachHangListItem, "Value", "Text"), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaPhuongThucThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Phương Thức Thanh Toán</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.MaPhuongThucThanhToan, new SelectList(Model.PaymentMethodListItem, "Value", "Text"), new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TrangThai)
-                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
-                </div>
             </div>
         </div>
 
