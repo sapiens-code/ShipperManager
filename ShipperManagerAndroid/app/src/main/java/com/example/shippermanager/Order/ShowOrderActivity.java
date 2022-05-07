@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.shippermanager.Model.TrangThaiDonHang;
 import com.example.shippermanager.map.MapsActivity;
 import com.example.shippermanager.Model.DonHang;
 import com.example.shippermanager.Model.HelperUtils;
@@ -22,7 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 public class ShowOrderActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -40,6 +48,7 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
 
     private Button btnHuyDon;
     private Button btnXemMap;
+    private Button btnDaGiao;
     private ImageButton btnCall;
 
     @Override
@@ -66,6 +75,7 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         btnHuyDon.setOnClickListener(this);
         btnXemMap.setOnClickListener(this);
         btnCall.setOnClickListener(this);
+        btnDaGiao.setOnClickListener(this);
     }
 
     private void initView()
@@ -81,6 +91,7 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         btnHuyDon = findViewById(R.id.btn_show_order_huy_don);
         btnXemMap = findViewById(R.id.btn_show_order_xem_map);
         btnCall = findViewById(R.id.btn_show_order_call);
+        btnDaGiao = findViewById(R.id.btn_show_order_da_giao);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -130,7 +141,10 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.btn_show_order_call:
                 CallCustomer();
-                        break;
+                break;
+            case R.id.btn_show_order_da_giao:
+                SuccessDelivery();
+                break;
             default:
                 break;
         }
@@ -143,6 +157,16 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         i.setData(Uri.parse(p));
         startActivity(i);
     }
+
+    private void SuccessDelivery()
+    {
+        DonHang.TrangThaiGiao = TrangThaiDonHang.DaGiao.ordinal();
+        DonHang.NgayGiao =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        databaseReference.child(DonHang.Id).setValue(DonHang);
+        Toast.makeText(getBaseContext(),"đơn hàng đã được chuyển vào lịch sử giao",Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, OrderListActivity.class));
+    }
+
 
     private void ViewMap()
     {

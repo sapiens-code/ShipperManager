@@ -117,6 +117,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         return;
                     }
                 }
+                //login fail
+                Toast.makeText(getBaseContext(),"login failure, username or password incorrect",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -125,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        Toast.makeText(getBaseContext(),"login failure, username or password incorrect",Toast.LENGTH_SHORT).show();
+
     }
 
     public void loginInSuccess(Shipper s) {

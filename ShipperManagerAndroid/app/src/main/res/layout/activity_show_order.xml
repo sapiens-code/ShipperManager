@@ -141,29 +141,28 @@
         android:id="@+id/btn_show_order_huy_don"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="16dp"
         android:text="HỦY ĐƠN HÀNG"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_show_order_da_giao"
+        app:layout_constraintVertical_bias="0.196" />
 
     <android.widget.Button
 
         android:id="@+id/btn_show_order_da_giao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="148dp"
         android:background="@drawable/main_button"
         android:text="HOÀN THÀNH"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/btn_show_order_huy_don"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_show_order_dia_chi"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_show_order_dia_chi" />
 
     <LinearLayout
         android:background="@color/text_light_background"

@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.shippermanager.Order.HistoryActivity;
 import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
 
@@ -44,7 +45,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 TimDonHang();
                 break;
             case R.id.btnDaGiao:
-
+                ShowHistory();
                 break;
             default:
                 break;
@@ -52,7 +53,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-
+    private void ShowHistory(){startActivity(new Intent(this, HistoryActivity.class));}
     private void TimDonHang()
     {
         startActivity(new Intent(this, OrderListActivity.class));
