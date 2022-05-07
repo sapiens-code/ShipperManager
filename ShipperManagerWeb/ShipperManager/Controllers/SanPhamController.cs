@@ -19,7 +19,7 @@ namespace ShipperManager.Controllers
         private static string ApiKey = "AIzaSyDydtdaqFseP31FMEtLQDqiUWT-8yyGq1Y";
         private static string Bucket = "shippermanager-be26e.appspot.com";
         private static string AuthEmail = "lamminhhy9999@gmail.com";
-        private static string AuthPassword = "01674275557";
+        private static string AuthPassword = "123456hy";
         // GET: Product
         public async Task<ActionResult> Index()
         {
