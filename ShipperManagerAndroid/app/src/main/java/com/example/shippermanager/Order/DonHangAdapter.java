@@ -65,23 +65,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
         DonHang dh = list.get(position);
         if(dh.TrangThaiGiao == TrangThaiDonHang.DangTim.ordinal())
             holder.txtTrangThai.setText("đang tìm");
-        else
+        else if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal())
             holder.txtTrangThai.setText("đã nhận");
-        holder.txtLoTrinh.setText(String.valueOf(dh.KhoanCach)+"km");
-        holder.txtPhiShip.setText(format.format( dh.PhiGiaoHang));
+        else
+            holder.txtTrangThai.setText("đã giao");
+        holder.txtLoTrinh.setText(String.valueOf(dh.KhoanCach) + "km");
+        holder.txtPhiShip.setText(format.format(dh.PhiGiaoHang));
         holder.txtDiaChi.setText(dh.KhachHang.DiaChi);
         holder.txtTongDon.setText(format.format(dh.TongTien));
 
         holder.view.setOnClickListener(v -> {
-            //nếu đơn hang đã được nhận
-            if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal())
-            {
-                Intent intent = new Intent(context, ShowOrderActivity.class);
-                intent.putExtra("MaDonHang",dh.Id);
-                context.startActivity(intent);
-            }
-            else
-            {
+            if(dh.TrangThaiGiao == TrangThaiDonHang.DangTim.ordinal()){
                 new AlertDialog.Builder(context)
                         .setTitle("Nhận Đơn Hàng")
                         .setMessage("Bạn có muốn nhận đơn hàng này?")
@@ -103,6 +97,17 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
             }
+            else if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal()) {
+                Intent intent = new Intent(context, ShowOrderActivity.class);
+                intent.putExtra("MaDonHang",dh.Id);
+                context.startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(context, ShowOrderActivity.class);
+                intent.putExtra("MaDonHang", dh.Id);
+                context.startActivity(intent);
+            }
+
 
         });
     }
@@ -118,7 +123,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtLoTrinh, txtPhiShip,txtTongDon,txtDiaChi,txtTrangThai;
+        TextView txtLoTrinh, txtPhiShip, txtTongDon, txtDiaChi, txtTrangThai;
         View view;
 
         public ViewHolder(@NonNull View itemView) {

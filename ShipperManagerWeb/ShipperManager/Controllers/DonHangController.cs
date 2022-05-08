@@ -80,9 +80,6 @@ namespace ShipperManager.Controllers
             return sum;
         }
 
-
-
-
         public PartialViewResult OrderDetailPartial()
         {
             int sum = QuantitySum();
@@ -142,7 +139,6 @@ namespace ShipperManager.Controllers
             try
             {
                 // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
             catch

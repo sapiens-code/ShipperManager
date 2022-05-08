@@ -66,7 +66,6 @@ public class OrderListActivity extends AppCompatActivity {
                         }
                     }
                 }
-
             }
 
             @Override

@@ -18,12 +18,14 @@ import com.example.shippermanager.map.MapsActivity;
 import com.example.shippermanager.Model.DonHang;
 import com.example.shippermanager.Model.HelperUtils;
 import com.example.shippermanager.R;
+import com.example.shippermanager.product.ProductListActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -45,10 +47,12 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
     private TextView txtDiaChi;
     private TextView txtTenKh;
     private TextView txtSdt;
+    private TextView txtSanPhamCount;
 
     private Button btnHuyDon;
     private Button btnXemMap;
     private Button btnDaGiao;
+    private Button btnViewProduct;
     private ImageButton btnCall;
 
     @Override
@@ -76,6 +80,7 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         btnXemMap.setOnClickListener(this);
         btnCall.setOnClickListener(this);
         btnDaGiao.setOnClickListener(this);
+        btnViewProduct.setOnClickListener(this);
     }
 
     private void initView()
@@ -87,11 +92,13 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
         txtDiaChi = findViewById(R.id.txt_show_order_dia_chi);
         txtTenKh = findViewById(R.id.txt_show_order_ten_kh);
         txtSdt = findViewById(R.id.txt_show_order_sdt);
+        txtSanPhamCount = findViewById(R.id.txt_show_order_san_pham_count);
 
         btnHuyDon = findViewById(R.id.btn_show_order_huy_don);
         btnXemMap = findViewById(R.id.btn_show_order_xem_map);
         btnCall = findViewById(R.id.btn_show_order_call);
         btnDaGiao = findViewById(R.id.btn_show_order_da_giao);
+        btnViewProduct = findViewById(R.id.btn_show_order_xem_san_Pham);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -106,16 +113,31 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot child: snapshot.getChildren()) {
                         DonHang = child.getValue(DonHang.class);
+                        DonHang.Id = child.getKey();
                         if(DonHang.Id.equals(ma))
                         {
-                            double tong = DonHang.TongTien + DonHang.PhiGiaoHang;
-                            txtTongTien.setText(format.format(tong));
+                            if(DonHang.PhuongThucThanhToan.Ten.equals("Thanh Toán Trực Tiếp")) {
+                                txtThuHo.setText(format.format(DonHang.TongTien));
+                                double tong = DonHang.TongTien + DonHang.PhiGiaoHang;
+                                txtTongTien.setText(format.format(tong));
+                            }
+                            else
+                            {
+                                txtThuHo.setText(format.format(0));
+                                double tong = DonHang.PhiGiaoHang;
+                                txtTongTien.setText(format.format(tong));
+                            }
                             txtPhiShip.setText(format.format(DonHang.PhiGiaoHang));
-                            txtThuHo.setText(format.format(DonHang.TongTien));
-                            txtLoTrinh.setText(String.valueOf(DonHang.KhoanCach)+"km");
+                            txtLoTrinh.setText("Lộ Trình: "+String.valueOf(DonHang.KhoanCach)+"km");
                             txtDiaChi.setText(DonHang.KhachHang.DiaChi);
                             txtTenKh.setText(DonHang.KhachHang.Ten);
                             txtSdt.setText(DonHang.KhachHang.SoDienThoai);
+                            txtSanPhamCount.setText("Sản Phẩm: "+String.valueOf(DonHang.DanhSachCTTT.size()));
+                            if(DonHang.TrangThaiGiao == TrangThaiDonHang.DaGiao.ordinal())
+                            {
+                                btnDaGiao.setEnabled(false);
+                                btnHuyDon.setEnabled(false);
+                            }
                             return;
                         }
                     }
@@ -145,9 +167,19 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
             case R.id.btn_show_order_da_giao:
                 SuccessDelivery();
                 break;
+            case R.id.btn_show_order_xem_san_Pham:
+                ViewProduct();
+                break;
             default:
                 break;
         }
+    }
+
+    private void ViewProduct()
+    {
+        Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra("MaDonHang",DonHang.Id);
+        startActivity(intent);
     }
 
     private void CallCustomer()
