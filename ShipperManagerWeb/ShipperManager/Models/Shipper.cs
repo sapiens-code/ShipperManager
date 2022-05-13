@@ -8,10 +8,11 @@ namespace ShipperManager.Models
     public class Shipper
     {
         public string Id { get; set; }
-        public string ten { get; set; }
+        public string Ten { get; set; }
         public string QueQuan { get; set; }
         public string TaiKhoan { get; set; }
         public string MatKhau { get; set; }
+        public string NgaySinh { get; set; }
         public bool TrangThai { get; set; }
     }
 }

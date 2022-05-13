@@ -84,13 +84,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void Register()
     {
-        Calendar car =  Calendar.getInstance();
-        car.set(Calendar.YEAR,1999);
-        car.set(Calendar.MONTH,10);
-        car.set(Calendar.DAY_OF_MONTH,20);
-        String key = Database.child("Shipper").push().getKey();
-        Shipper shipper = new Shipper(key,"hy",car.getTimeInMillis(),"Kien Giang",true,"admin","admin");
-        Database.child("Shipper").child(key).setValue(shipper);
+
+        Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void login()
@@ -111,14 +107,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child: snapshot.getChildren()) {
                     Shipper s = child.getValue(Shipper.class);
-                    if(username.equals(s.getTaiKhoan())&&password.equals(s.getMatKhau()))
+                    if(username.equals(s.TaiKhoan)&&password.equals(s.MatKhau))
                     {
-                        loginInSuccess(s);
+                        if(s.TrangThai)
+                        {
+                            loginInSuccess(s);
+                        }
+                        else
+                        {
+                            Toast.makeText(getBaseContext(),"tài khoảng của bạn không khả dụng, xin liên hệ với người quản lý hoặc chở xác thực",Toast.LENGTH_SHORT).show();
+                        }
                         return;
                     }
                 }
                 //login fail
-                Toast.makeText(getBaseContext(),"login failure, username or password incorrect",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"đăng nhập thất bại, tên tài khoảng hoặc mật khẩu không đúng",Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -37,8 +37,7 @@ public class OrderListActivity extends AppCompatActivity {
         setTitle("TÌM ĐƠN HÀNG MỚI");
         init();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
         
     }
 
@@ -76,7 +75,7 @@ public class OrderListActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         String json = mPrefs.getString("Shipper", "");
                         Shipper obj = gson.fromJson(json, Shipper.class);
-                        if(obj.getId().equals(o.Shipper.getId()))
+                        if(obj.Id.equals(o.Shipper.Id))
                         {
                             OrderList.add(o);
                             adapter.notifyItemInserted(OrderList.size() -1);

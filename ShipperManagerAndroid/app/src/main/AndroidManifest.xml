@@ -45,6 +45,7 @@
         <activity android:name=".menu.MenuActivity" />
         <activity android:name=".Order.ShowOrderActivity" />
         <activity android:name=".product.ProductListActivity" />
+        <activity android:name=".loggin.RegisterActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
