@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shippermanager.Order.HistoryActivity;
 import com.example.shippermanager.Order.OrderListActivity;
 import com.example.shippermanager.R;
+import com.example.shippermanager.loggin.LoginActivity;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnTimDonHang;
     private Button btnDaGiao;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,14 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     {
         btnTimDonHang = findViewById(R.id.btnTimDonHang);
         btnDaGiao = findViewById(R.id.btnDaGiao);
+        btnLogout = findViewById(R.id.btnLogout);
     }
 
     private void registerListener(){
 
         btnTimDonHang.setOnClickListener(this);
         btnDaGiao.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +51,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnDaGiao:
                 ShowHistory();
                 break;
+            case R.id.btnLogout:
+                Logout();
+                break;
             default:
                 break;
 
@@ -57,5 +64,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private void TimDonHang()
     {
         startActivity(new Intent(this, OrderListActivity.class));
+    }
+    private void Logout()
+    {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
