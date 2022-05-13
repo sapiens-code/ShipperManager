@@ -40,8 +40,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public ProductAdapter(Context context, ArrayList<ChiTietDonHang> list) {
         this.context = context;
         this.list = list;
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference().child("DonHang");
+
     }
 
     @NonNull

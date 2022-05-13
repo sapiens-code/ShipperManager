@@ -29,7 +29,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAQ98LDwfFxMuX46r1us23C2x0g1b6oTy4" />
-
         <activity
             android:name=".map.MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -39,7 +38,6 @@
             android:theme="@style/Theme.ShipperManager.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
