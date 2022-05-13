@@ -17,37 +17,62 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaKhachHang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Khách Hàng</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.MaKhachHang, new SelectList(Model.KhachHangListItem, "Value", "Text"), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaPhuongThucThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Phương Thức Thanh Toán</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.MaPhuongThucThanhToan, new SelectList(Model.PaymentMethodListItem, "Value", "Text"), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TrangThai)
-                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="control-label col-md-2">Sản Phẩm</label>
-            <div class="col-md-10">
-                @foreach (var i in Model.OrderDetailListItem)
-                {
-                    @Html.EditorFor(model => i.SanPham.Ten);
-                }
-
+            <div class="col-md-1">
+                
+                <table class="table">
+                    <tr>
+                        <th>
+                            Tên
+                        </th>
+                        <th>
+                            Giá
+                        </th>
+                        <th>
+                            Số Lượng
+                        </th>
+                        <th>
+                            Ảnh
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.OrderDetailListItem)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.Ten)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.Gia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.ImagePath)*@
+                                <img id="image" src="@item.SanPham.ImagePath" height="100" width="100" asp-append-version="true" />
+                            </td>
+                            <td>
+                                @Html.ActionLink("Thêm", "Edit", new { ma = item.SanPham.Id }, new { @class = "btn btn-info" }) <br />
+                                @Html.ActionLink("Giảm", "Edit", new { ma = item.SanPham.Id }, new { @class = "btn btn-info" }) <br />
+                                @Html.ActionLink("Xóa", "Delete", new { ma = item.SanPham.Id }, new { @class = "btn btn-info" }) <br />
+                            </td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
 

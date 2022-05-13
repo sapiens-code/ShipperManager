@@ -31,6 +31,15 @@ namespace ShipperManager.Models
               .PostAsync(element);
         }
 
+        public static async Task UpdateElementByKey<T>(string path, T element,string key)
+        {
+            var firebaseClient = new FirebaseClient(FirebaseUrl);
+            await firebaseClient
+              .Child(path)
+              .Child(key)
+              .PutAsync(element);
+        }
+
         public static async Task<FirebaseObject<T>> GetElementByKey<T>(string path,string key)
         {
             var firebaseClient = new FirebaseClient(FirebaseUrl);

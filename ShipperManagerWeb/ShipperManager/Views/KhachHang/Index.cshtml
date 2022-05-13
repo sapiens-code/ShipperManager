@@ -1,24 +1,24 @@
 ﻿@model IEnumerable<ShipperManager.Models.KhachHang>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Khách Hàng";
 }
 
-<h2>Index</h2>
+<h2>Quản Lý Khách Hàng</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Ten)
+            Tên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DiaChi)
+            Địa Chỉ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoDienThoai)
+            Số Điện Thoại
         </th>
         <th></th>
     </tr>
@@ -35,9 +35,8 @@
             @Html.DisplayFor(modelItem => item.SoDienThoai)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

@@ -19,7 +19,7 @@ namespace ShipperManager.Controllers
         private static string ApiKey = "AIzaSyDydtdaqFseP31FMEtLQDqiUWT-8yyGq1Y";
         private static string Bucket = "shippermanager-be26e.appspot.com";
         private static string AuthEmail = "lamminhhy9999@gmail.com";
-        private static string AuthPassword = "01674275557";
+        private static string AuthPassword = "123456hy";
         // GET: Product
         public async Task<ActionResult> Index()
         {
@@ -33,12 +33,6 @@ namespace ShipperManager.Controllers
             }
 
             return View(lst);
-        }
-
-        // GET: Product/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Product/Create
@@ -64,7 +58,9 @@ namespace ShipperManager.Controllers
                     string link = await Upload(stream, fileName);
                     product.ImagePath = link;
                     //update product object
-                    await DatabaseUtils.AddElement("SanPham", product);
+                    var obj = await DatabaseUtils.AddElement("SanPham", product);
+                    obj.Object.Id = obj.Key;
+                    await DatabaseUtils.UpdateElementByKey(TableCategory.SanPham, obj.Object, obj.Key);
                 }
 
                 return RedirectToAction("Index");

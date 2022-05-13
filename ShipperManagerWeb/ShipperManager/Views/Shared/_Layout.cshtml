@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Shipper Manager</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @*<link href="~/Content/MainLayout.css" rel="stylesheet" type="text/css" />*@
@@ -24,8 +24,8 @@
                     <li>@Html.ActionLink("Sản Phẩm", "Index", "SanPham")</li>
                     <li>@Html.ActionLink("Đơn Hàng", "Index", "DonHang")</li>
                     <li>@Html.ActionLink("Shipper", "Contact", "Shipper")</li>
-                    <li>@Html.ActionLink("Khách Hàng", "Index", "Customer")</li>
-                    <li>@Html.Action("OrderDetailPartial","DonHang")</li>
+                    <li>@Html.ActionLink("Khách Hàng", "Index", "KhachHang")</li>
+                    <li>@Html.Action("OrderDetailPartial", "DonHang")</li>
                 </ul>
             </div>
         </div>
@@ -34,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Shipper Manager - Hoàng Quốc Cường - Lâm Minh Hy</p>
         </footer>
     </div>
 

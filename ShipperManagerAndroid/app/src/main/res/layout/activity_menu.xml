@@ -28,7 +28,7 @@
             android:id="@+id/btnDaGiao"
             android:drawableTop="@drawable/dagiao"
             android:layout_marginLeft="10dp"
-            android:text="đã giao"
+            android:text="lịch sử"
             android:backgroundTint="@color/white"
             />
     </LinearLayout>

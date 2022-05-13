@@ -1,6 +1,8 @@
 package com.example.shippermanager.Model;
 
-public class ChiTietDonHang {
+import java.io.Serializable;
+
+public class ChiTietDonHang implements Serializable {
 
     public SanPham SanPham;
     public int SoLuong;
@@ -14,19 +16,9 @@ public class ChiTietDonHang {
 
     }
 
-//    public SanPham getSanPham() {
-//        return sanPham;
-//    }
-//
-//    public void setSanPham(SanPham sanPham) {
-//        this.sanPham = sanPham;
-//    }
-//
-//    public int getSoLuong() {
-//        return soLuong;
-//    }
-//
-//    public void setSoLuong(int soLuong) {
-//        this.soLuong = soLuong;
-//    }
+    public double GetMoneySum()
+    {
+        return SanPham.Gia * SoLuong;
+    }
+
 }

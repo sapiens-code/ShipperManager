@@ -268,7 +268,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\DonHangController.cs" />
     <Compile Include="Controllers\PhuongThucThanhToanController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
@@ -326,13 +326,14 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\SanPham\Index.cshtml" />
     <Content Include="Views\SanPham\Create.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\KhachHang\Create.cshtml" />
+    <Content Include="Views\KhachHang\Index.cshtml" />
     <Content Include="Views\PhuongThucThanhToan\Create.cshtml" />
     <Content Include="Views\PhuongThucThanhToan\Index.cshtml" />
     <Content Include="Views\DonHang\Create.cshtml" />
     <Content Include="Views\DonHang\OrderDetailPartial.cshtml" />
     <Content Include="Views\DonHang\Index.cshtml" />
+    <Content Include="Views\KhachHang\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shippermanager.Model.DonHang;
+import com.example.shippermanager.Model.HelperUtils;
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.Model.TrangThaiDonHang;
 import com.example.shippermanager.R;
@@ -31,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 
@@ -39,12 +41,6 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     private ArrayList<DonHang> list;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
-    NumberFormat format = NumberFormat.getCurrencyInstance();
-
-    public DonHangAdapter() {
-
-    }
 
     public DonHangAdapter(Context context, ArrayList<DonHang> list) {
         this.context = context;
@@ -57,78 +53,68 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Set layout cho adapter để hiển thị lên list
-
         View view = LayoutInflater.from(context).inflate(R.layout.view_don_hang, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //money format
+        NumberFormat format = HelperUtils.GetNumberFormat();
         //Trả về 1 item tại vị trí position(vị trí hiện tại theo list)
         DonHang dh = list.get(position);
-        //Set tiêu đề
         if(dh.TrangThaiGiao == TrangThaiDonHang.DangTim.ordinal())
             holder.txtTrangThai.setText("đang tìm");
-        else
+        else if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal())
             holder.txtTrangThai.setText("đã nhận");
-        holder.txtLoTrinh.setText(String.valueOf(dh.KhoanCach));
-        holder.txtPhiShip.setText(String.valueOf( dh.PhiGiaoHang));
+        else
+            holder.txtTrangThai.setText("đã giao");
+        holder.txtLoTrinh.setText(String.valueOf(dh.KhoanCach) + "km");
+        holder.txtPhiShip.setText(format.format(dh.PhiGiaoHang));
         holder.txtDiaChi.setText(dh.KhachHang.DiaChi);
-        holder.txtTongDon.setText(String.valueOf(dh.TongTien));
+        holder.txtTongDon.setText(format.format(dh.TongTien));
 
         holder.view.setOnClickListener(v -> {
-            //nếu đơn hang đã được nhận
-            if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal())
-            {
-                Intent intent = new Intent(context, ShowOrderActivity.class);
-                intent.putExtra("MaDonHang",dh.Id);
-                context.startActivity(intent);
-            }
-            else
-            {
+            if(dh.TrangThaiGiao == TrangThaiDonHang.DangTim.ordinal()){
                 new AlertDialog.Builder(context)
                         .setTitle("Nhận Đơn Hàng")
                         .setMessage("Bạn có muốn nhận đơn hàng này?")
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String MY_PREFS_NAME = "MyPrefsFile";
-                                SharedPreferences mPrefs = context.getSharedPreferences(MY_PREFS_NAME,0);
-                                Gson gson = new Gson();
-                                String json = mPrefs.getString("Shipper", "");
-                                Shipper obj = gson.fromJson(json, Shipper.class);
-
-                                dh.Shipper = obj;
-                                dh.TrangThaiGiao = 1;
-                                addDatatoFirebase(dh);
-                                Intent intent = new Intent(context, ShowOrderActivity.class);
-                                intent.putExtra("MaDonHang",dh.Id);
-                                context.startActivity(intent);
-                            }
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            //get current shipper account
+                            String json = HelperUtils.GetSharedObject(context,"Shipper");
+                            Gson gson = new Gson();
+                            Shipper obj = gson.fromJson(json, Shipper.class);
+                            //add shipper into order
+                            dh.Shipper = obj;
+                            dh.TrangThaiGiao = 1;
+                            addDataToFirebase(dh);
+                            holder.txtTrangThai.setText("đã nhận");
+                            Intent intent = new Intent(context, ShowOrderActivity.class);
+                            intent.putExtra("MaDonHang",dh.Id);
+                            context.startActivity(intent);
                         })
-                        // A null listener allows the button to dismiss the dialog and take no further action.
                         .setNegativeButton(android.R.string.no, null)
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
             }
+            else if(dh.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal()) {
+                Intent intent = new Intent(context, ShowOrderActivity.class);
+                intent.putExtra("MaDonHang",dh.Id);
+                context.startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(context, ShowOrderActivity.class);
+                intent.putExtra("MaDonHang", dh.Id);
+                context.startActivity(intent);
+            }
+
 
         });
     }
 
-    private void addDatatoFirebase(DonHang donHang) {
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child(donHang.Id).setValue(donHang);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private void addDataToFirebase(DonHang donHang) {
+        databaseReference.child(donHang.Id).child("TrangThaiGiao").setValue(1);
+        databaseReference.child(donHang.Id).child("Shipper").setValue(donHang.Shipper);
     }
 
     @Override
@@ -137,7 +123,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtLoTrinh, txtPhiShip,txtTongDon,txtDiaChi,txtTrangThai;
+        TextView txtLoTrinh, txtPhiShip, txtTongDon, txtDiaChi, txtTrangThai;
         View view;
 
         public ViewHolder(@NonNull View itemView) {

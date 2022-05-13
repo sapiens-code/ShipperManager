@@ -2,10 +2,13 @@
 using ShipperManager.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace ShipperManager.Controllers
 {
@@ -136,7 +139,6 @@ namespace ShipperManager.Controllers
             try
             {
                 // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
             catch

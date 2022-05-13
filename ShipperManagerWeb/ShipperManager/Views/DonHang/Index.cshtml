@@ -26,7 +26,9 @@
         <th>
             Phương Thức Thanh Toán
         </th>
-        <th></th>
+        <th>
+            Khoảng Cách
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -47,9 +49,12 @@
             @Html.DisplayFor(modelItem => item.PhuongThucThanhToan.Ten)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.KhoanCach)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }

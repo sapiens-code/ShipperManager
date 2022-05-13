@@ -24,7 +24,7 @@ namespace ShipperManager.Models
         public decimal PhiGiaoHang { get; set; }
         public Shipper Shipper { get; set; }
 
-        public DonHang(NhanVien nhanVien, KhachHang khachHang, string ngayTao, bool trangThaiGiao, PhuongThucThanhToan phuongThucThanhToan,List<ChiTietDonHang> cttt,double khoanCanh,decimal phiGiaoHang)
+        public DonHang(NhanVien nhanVien, KhachHang khachHang, string ngayTao, PhuongThucThanhToan phuongThucThanhToan,List<ChiTietDonHang> cttt,double khoanCanh,decimal phiGiaoHang)
         {
             NhanVien = nhanVien;
             KhachHang = khachHang;
