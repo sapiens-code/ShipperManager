@@ -20,6 +20,12 @@
         <th>
             Số Điện Thoại
         </th>
+        <th>
+            Kinh Độ
+        </th>
+        <th>
+            Vĩ Độ
+        </th>
         <th></th>
     </tr>
 
@@ -33,6 +39,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SoDienThoai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KinhDo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ViDo)
         </td>
         <td>
             @Html.ActionLink("Sửa", "Edit", new { id=item.Id }) |

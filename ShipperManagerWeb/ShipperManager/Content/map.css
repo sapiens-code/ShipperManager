@@ -12,14 +12,14 @@
 /* 
  * Optional: Makes the sample page fill the window. 
  */
-html,
+/*html,
 body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
+}*/
 
-#description {
+/*#description {
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
@@ -31,13 +31,13 @@ body {
 
 #infowindow-content {
     display: none;
-}
+}*/
 
 #map #infowindow-content {
     display: inline;
 }
 
-.pac-card {
+/*.pac-card {
     background-color: #fff;
     border: 0;
     border-radius: 2px;
@@ -91,4 +91,4 @@ body {
 
 #target {
     width: 345px;
-}
+}*/
