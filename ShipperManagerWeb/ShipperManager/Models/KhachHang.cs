@@ -11,6 +11,8 @@ namespace ShipperManager.Models
         public string Ten { get; set; }
         public string DiaChi { get; set; }
         public string SoDienThoai { get; set; }
+        public double KinhDo { get; set; }
+        public double ViDo { get; set; }
 
         public KhachHang()
         {

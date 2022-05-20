@@ -75,7 +75,6 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void registerListener(){
-
         btnHuyDon.setOnClickListener(this);
         btnXemMap.setOnClickListener(this);
         btnCall.setOnClickListener(this);

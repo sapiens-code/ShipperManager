@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         else
         {
-            Shipper shipper = new Shipper(key,name,ngaySinh,quequan,userName,password,false);
+            Shipper shipper = new Shipper(key,name,ngaySinh,quequan,userName,password,false,0,0);
             Database.child("Shipper").child(key).setValue(shipper);
             startActivity(new Intent(this,LoginActivity.class));
         }

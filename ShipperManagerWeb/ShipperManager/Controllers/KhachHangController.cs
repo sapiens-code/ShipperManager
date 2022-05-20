@@ -67,6 +67,8 @@ namespace ShipperManager.Controllers
             kh.Ten = collection["Ten"];
             kh.DiaChi = collection["DiaChi"];
             kh.SoDienThoai = collection["SoDienThoai"];
+            kh.KinhDo = Double.Parse(collection["KinhDo"]);
+            kh.ViDo = Double.Parse( collection["ViDo"]);
             await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh, kh.Id);
 
             foreach (var item in await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang))
