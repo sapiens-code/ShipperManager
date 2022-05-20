@@ -53,6 +53,8 @@
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".menu.MenuActivity" />
+
+        <service android:name=".Model.LocationService"/>
     </application>
 
 </manifest>

@@ -9,12 +9,14 @@ public class Shipper {
     public String TaiKhoan;
     public String MatKhau;
     public boolean TrangThai;
+    public double KinhDo;
+    public double ViDo;
 
     public Shipper() {
 
     }
 
-    public Shipper(String id,String ten, String ngaySinh, String queQuan, String taiKhoan, String matKhau, boolean trangThai) {
+    public Shipper(String id, String ten, String ngaySinh, String queQuan, String taiKhoan, String matKhau, boolean trangThai, double kinhDo, double viDo) {
         Id = id;
         Ten = ten;
         NgaySinh = ngaySinh;
@@ -22,5 +24,7 @@ public class Shipper {
         TaiKhoan = taiKhoan;
         MatKhau = matKhau;
         TrangThai = trangThai;
+        KinhDo = kinhDo;
+        ViDo = viDo;
     }
 }

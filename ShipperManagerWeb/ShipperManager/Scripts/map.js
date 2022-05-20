@@ -34,7 +34,6 @@ function initAutocomplete() {
                 }
             }
         });
-        
     });
 
     //const input = document.getElementById("pac-input");

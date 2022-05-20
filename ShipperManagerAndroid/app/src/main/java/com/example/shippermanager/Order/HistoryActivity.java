@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.shippermanager.Model.DonHang;
+import com.example.shippermanager.Model.HelperUtils;
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.Model.TrangThaiDonHang;
 import com.example.shippermanager.R;
@@ -29,6 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ArrayList<DonHang> OrderList = new ArrayList<>();
     DonHangAdapter adapter;
     private RecyclerView recyclerView;
+    private Shipper shipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,10 @@ public class HistoryActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        String json = HelperUtils.GetSharedObject(this,"Shipper");
+        Gson gson = new Gson();
+        shipper = gson.fromJson(json, Shipper.class);
     }
 
     // this event will enable the back
@@ -79,19 +85,13 @@ public class HistoryActivity extends AppCompatActivity {
 
                     if(o.TrangThaiGiao == TrangThaiDonHang.DaGiao.ordinal())
                     {
-                        String MY_PREFS_NAME = "MyPrefsFile";
-                        SharedPreferences mPrefs = getSharedPreferences(MY_PREFS_NAME,0);
-                        Gson gson = new Gson();
-                        String json = mPrefs.getString("Shipper", "");
-                        Shipper obj = gson.fromJson(json, Shipper.class);
-                        if(obj.Id.equals(o.Shipper.Id))
+                        if(shipper.Id.equals(o.Shipper.Id))
                         {
                             OrderList.add(o);
                             adapter.notifyItemInserted(OrderList.size() -1);
                         }
                     }
                 }
-
             }
 
             @Override

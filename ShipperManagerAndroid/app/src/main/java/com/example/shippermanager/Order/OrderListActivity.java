@@ -1,6 +1,10 @@
 package com.example.shippermanager.Order;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -8,10 +12,14 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shippermanager.Model.DonHang;
+import com.example.shippermanager.Model.HelperUtils;
+import com.example.shippermanager.Model.LocationService;
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.Model.TrangThaiDonHang;
 import com.example.shippermanager.R;
@@ -29,6 +37,8 @@ public class OrderListActivity extends AppCompatActivity {
     private ArrayList<DonHang> OrderList = new ArrayList<>();
     DonHangAdapter adapter;
     private RecyclerView recyclerView;
+    private Shipper shipper;
+    int LOCATION_REQUEST_CODE = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +46,34 @@ public class OrderListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_list);
         setTitle("TÌM ĐƠN HÀNG MỚI");
         init();
-
-
+        String json = HelperUtils.GetSharedObject(this,"Shipper");
+        Gson gson = new Gson();
+        shipper = gson.fromJson(json, Shipper.class);
         
+    }
+
+    private void askForPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            }else
+            {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //ask for permission access location
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, LocationService.class));
+        } else {
+            askForPermission();
+        }
     }
 
     // this event will enable the back
@@ -58,6 +93,7 @@ public class OrderListActivity extends AppCompatActivity {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref = database.child("DonHang");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child: snapshot.getChildren()) {
@@ -70,12 +106,7 @@ public class OrderListActivity extends AppCompatActivity {
                     }
                     else if(o.TrangThaiGiao == TrangThaiDonHang.DangGiao.ordinal())
                     {
-                        String MY_PREFS_NAME = "MyPrefsFile";
-                        SharedPreferences mPrefs = getSharedPreferences(MY_PREFS_NAME,0);
-                        Gson gson = new Gson();
-                        String json = mPrefs.getString("Shipper", "");
-                        Shipper obj = gson.fromJson(json, Shipper.class);
-                        if(obj.Id.equals(o.Shipper.Id))
+                        if(shipper.Id.equals(o.Shipper.Id))
                         {
                             OrderList.add(o);
                             adapter.notifyItemInserted(OrderList.size() -1);
