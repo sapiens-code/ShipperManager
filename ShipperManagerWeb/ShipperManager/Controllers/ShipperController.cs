@@ -1,4 +1,5 @@
 ﻿using ShipperManager.Models;
+using ShipperManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,31 +19,23 @@ namespace ShipperManager.Controllers
         }
 
         // GET: Shipper/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
-        }
-
-        // GET: Shipper/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Shipper/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var shipper = await DatabaseUtils.GetElementByKey<Shipper>(TableCategory.Shipper, id);
+            var listObj = await DatabaseUtils.GetAllElement<DonHang>(TableCategory.DonHang);
+            var listDonHang = new List<DonHang>();
+            foreach(var item in listObj)
             {
-                // TODO: Add insert logic here
+                if(item.Object.Shipper != null)
+                {
+                    if(item.Object.Shipper.Id.Equals(id) && item.Object.TrangThaiGiao == TrangThaiDonHang.DaGiao)
+                    {
+                        listDonHang.Add(item.Object);
+                    }
+                }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(new ShipperViewModel(shipper.Object,listDonHang));
         }
 
         // GET: Shipper/Edit/5

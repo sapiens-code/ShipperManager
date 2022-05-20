@@ -116,7 +116,9 @@ namespace ShipperManager.Controllers
                 donHangViewModel.OrderDetailListItem = lstDetail;
 
                 DonHang dh = await donHangViewModel.GetDonHang();
-                await DatabaseUtils.AddElement(TableCategory.DonHang, dh);
+                var obj = await DatabaseUtils.AddElement(TableCategory.DonHang, dh);
+                dh.Id = obj.Key;
+                await DatabaseUtils.UpdateElementByKey(TableCategory.DonHang, dh, dh.Id);
                 ClearOrderDetail();
                 return RedirectToAction("Index");
             }
