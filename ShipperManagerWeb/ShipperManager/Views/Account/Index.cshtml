@@ -9,8 +9,8 @@
     <div id="login">
         @using (Html.BeginForm("LoginAsync", "Account", new { @strUrl = Request.Url.ToString() }))
         {
-            @Html.Label("Tên Tài Khoảng:")
-            @Html.TextBox("txtUser", "", htmlAttributes: new { @id = "userName", @placeholder = "nhập tên tài khoảng" })
+            @Html.Label("Tên Tài Khoản:")
+            @Html.TextBox("txtUser", "", htmlAttributes: new { @id = "userName", @placeholder = "nhập tên tài khoản" })
             <br /><br />
             @Html.Label("Mật Khẩu:")
             @Html.Password("txtPass", "", htmlAttributes: new { @id = "password", @placeholder = "nhập mật khẩu" })
