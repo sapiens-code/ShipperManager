@@ -13,25 +13,22 @@
 
 <h2>Quản Lý Shipper</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Ten)
+            Tên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QueQuan)
+            Quê Quán
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TaiKhoan)
+            Tài Khoản
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MatKhau)
+            Mật Khẩu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TrangThai)
+            Trạng Thái
         </th>
         <th></th>
     </tr>
@@ -55,9 +52,9 @@
                 @Html.DisplayFor(modelItem => item.TrangThai)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Chi Tiết", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

@@ -11,6 +11,8 @@ namespace ShipperManager.Models
         public string Id { get; set; }
         [Display(Name = "Tên")]
         public string Ten { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N0}đ", ApplyFormatInEditMode = true)]
         [Display(Name = "Giá")]
         public decimal Gia { get; set; }
         [Display(Name = "Mô Tả")]

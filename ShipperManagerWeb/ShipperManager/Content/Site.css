@@ -1,6 +1,8 @@
 ﻿body {
-    padding-top: 50px;
+    margin: 0;
+    padding: 0;
     padding-bottom: 20px;
+    background-color: #05134a
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -15,6 +17,33 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+
+.nav.navbar-nav li a {
+    color: black;
+    font-size:medium;
+}
+.navbar-brand {
+    color: black;
+}
+.body-content {
+    background-color: white;
+    border-radius: 15px;
+}
+.grid-container {
+    display: grid;
+}
+
+/*.add-button {
+    display: block;
+    height: 25px;
+    background: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #e1e1e2;
+    color: #000;
+    font-weight: bold;
+}*/
 
 /* Set width on the form input elements since they're 100% wide by default */
 /*input,

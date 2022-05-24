@@ -26,6 +26,7 @@
     const markers = [];
 
     var starCountRef = firebase.database().ref('Shipper');
+    
     starCountRef.on('value', (snapshot) => {
         var i = 0;
         snapshot.forEach((object) => {
@@ -36,6 +37,11 @@
                 const marker = new google.maps.Marker({
                     position: location,
                     map: map,
+                    icon: {
+                        labelOrigin: new google.maps.Point(28, 64),
+                        url: 'http://maps.google.com/mapfiles/kml/shapes/motorcycling.png'
+                    },
+                    label: { color: '#000000', fontWeight: 'bold', fontSize: '14px', text: data.Ten }
                 });
                 markers.push(marker);
             }

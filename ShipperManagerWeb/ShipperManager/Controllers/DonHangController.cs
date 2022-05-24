@@ -91,9 +91,10 @@ namespace ShipperManager.Controllers
         }
 
         // GET: DonHang/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var dh = await DatabaseUtils.GetElementByKey<DonHang>(TableCategory.DonHang, id);
+            return View(dh.Object);
         }
 
         // GET: DonHang/Create
@@ -125,27 +126,6 @@ namespace ShipperManager.Controllers
             catch(Exception)
             {
                 return View(donHangViewModel);
-            }
-        }
-
-        // GET: DonHang/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DonHang/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
 

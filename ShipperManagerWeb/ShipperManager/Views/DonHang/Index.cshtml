@@ -40,7 +40,15 @@
             @Html.DisplayFor(modelItem => item.NgayTao)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TrangThaiGiao)
+            @foreach (var value in ShipperManager.Utils.EnumHelper<ShipperManager.Models.TrangThaiDonHang>.GetValues(ShipperManager.Models.TrangThaiDonHang.DaGiao))
+            {
+                if (value == item.TrangThaiGiao)
+                {
+                    var trangThai = ShipperManager.Utils.EnumHelper<ShipperManager.Models.TrangThaiDonHang>.GetDisplayValue(value);
+                    @Html.DisplayFor(e => trangThai)
+                }
+            }
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PhuongThucThanhToan.Ten)
@@ -49,7 +57,6 @@
             @Html.DisplayFor(modelItem => item.KhoanCach)
         </td>
         <td>
-            @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
             @Html.ActionLink("Chi Tiết", "Details", new { id = item.Id }) |
             @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
         </td>
