@@ -31,9 +31,9 @@
                 <img id="image" src="@item.SanPham.ImagePath" height="100" width="100" asp-append-version="true" />
             </td>
             <td>
-                @Html.ActionLink("Tăng", "ShowOrderDetail", new { id = item.SanPham.Id, action = 0 }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
-                @Html.ActionLink("Giảm", "Edit", new { id = item.SanPham.Id, action = 1 }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
-                @Html.ActionLink("Xóa", "Delete", new { id = item.SanPham.Id, action = 3 }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
+                @Html.ActionLink("Tăng", "IncreaseProductQuantity", new { @id = item.SanPham.Id, url = Request.Url.ToString() }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
+                @Html.ActionLink("Giảm", "DecreaseProductQuantity", new { @id = item.SanPham.Id, url = Request.Url.ToString() }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
+                @Html.ActionLink("Xóa", "RemoveProductDetail", new { @id = item.SanPham.Id, url = Request.Url.ToString() }, new { @class = "btn btn-info btn-sm custom-btn" }) <br />
             </td>
         </tr>
     }

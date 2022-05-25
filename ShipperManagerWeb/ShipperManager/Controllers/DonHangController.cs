@@ -133,26 +133,43 @@ namespace ShipperManager.Controllers
             return RedirectToAction("Index");
         }
 
-        public PartialViewResult ShowOrderDetail(string id, int action)
+        public PartialViewResult ShowOrderDetail()
         {
             List<ChiTietDonHang> lst = GetOrderDetailt();
-            if (!id.Equals(""))
-            {
-                var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
-
-                if (action == 0)
-                    detail.SoLuong++;
-                else if (action == 1)
-                {
-                    if (detail.SoLuong > 0) detail.SoLuong--;
-                }
-                else
-                {
-                    lst.Remove(detail);
-                }
-            }
-
             return PartialView(lst);
         }
+
+        public ActionResult IncreaseProductQuantity(string id,string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            detail.SoLuong++;
+
+            return Redirect(url);
+        }
+
+        public ActionResult DecreaseProductQuantity(string id, string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            if(detail.SoLuong > 1)
+                detail.SoLuong--;
+            else
+                lst.Remove(detail);
+
+            return Redirect(url);
+        }
+
+        public ActionResult RemoveProductDetail(string id, string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            lst.Remove(detail);
+            return Redirect(url);
+        }
+
     }
 }
