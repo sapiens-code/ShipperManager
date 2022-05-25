@@ -20,30 +20,31 @@
 
 .nav.navbar-nav li a {
     color: black;
-    font-size:medium;
+    font-size: medium;
 }
+
 .navbar-brand {
     color: black;
 }
+
 .body-content {
     background-color: white;
     border-radius: 15px;
 }
+
 .grid-container {
     display: grid;
 }
 
-/*.add-button {
-    display: block;
-    height: 25px;
-    background: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    border: 1px solid #e1e1e2;
-    color: #000;
-    font-weight: bold;
-}*/
+.custom-btn {
+    border-radius: 10px;
+    margin-top: 3px;
+    background-color: #05134a;
+}
+
+    .custom-btn:hover {
+        background-color: #112263
+    }
 
 /* Set width on the form input elements since they're 100% wide by default */
 /*input,

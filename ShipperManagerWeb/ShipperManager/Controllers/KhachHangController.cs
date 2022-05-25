@@ -40,6 +40,7 @@ namespace ShipperManager.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return View(customer);
                 var kh = await DatabaseUtils.AddElement(TableCategory.KhachHang, customer);
                 kh.Object.Id = kh.Key;
                 await DatabaseUtils.UpdateElementByKey(TableCategory.KhachHang, kh.Object, kh.Key);

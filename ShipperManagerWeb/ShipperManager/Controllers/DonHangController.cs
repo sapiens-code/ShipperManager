@@ -39,7 +39,7 @@ namespace ShipperManager.Controllers
             }
             List<ChiTietDonHang> orderDetails = GetOrderDetailt();
             var detail = orderDetails.FirstOrDefault(x => x.SanPham.Id.Equals(proId));
-            if(detail == null)
+            if (detail == null)
             {
                 p.Object.Id = p.Key;
                 orderDetails.Add(new ChiTietDonHang(p.Object));
@@ -50,13 +50,12 @@ namespace ShipperManager.Controllers
                 detail.SoLuong++;
                 return Redirect(strUrl);
             }
-            
         }
 
         private List<ChiTietDonHang> GetOrderDetailt()
         {
             List<ChiTietDonHang> lst = Session[OrderDetailSessionName] as List<ChiTietDonHang>;
-            if(lst == null)
+            if (lst == null)
             {
                 lst = new List<ChiTietDonHang>();
                 Session[OrderDetailSessionName] = lst;
@@ -83,10 +82,8 @@ namespace ShipperManager.Controllers
         public PartialViewResult OrderDetailPartial()
         {
             int sum = QuantitySum();
-            if(sum != 0)
-            {
-                ViewBag.QuantitySum = sum;
-            }
+            ViewBag.QuantitySum = sum;
+
             return PartialView();
         }
 
@@ -123,7 +120,7 @@ namespace ShipperManager.Controllers
                 ClearOrderDetail();
                 return RedirectToAction("Index");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return View(donHangViewModel);
             }
@@ -136,20 +133,26 @@ namespace ShipperManager.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: DonHang/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public PartialViewResult ShowOrderDetail(string id, int action)
         {
-            try
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+            if (!id.Equals(""))
             {
-                // TODO: Add delete logic here
+                var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
 
-                return RedirectToAction("Index");
+                if (action == 0)
+                    detail.SoLuong++;
+                else if (action == 1)
+                {
+                    if (detail.SoLuong > 0) detail.SoLuong--;
+                }
+                else
+                {
+                    lst.Remove(detail);
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return PartialView(lst);
         }
     }
 }
