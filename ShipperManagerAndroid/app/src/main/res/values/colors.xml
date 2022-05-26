@@ -11,4 +11,5 @@
     <color name="main_background">#FFEB3B</color>
     <color name="text_light_background">#FFF9C4</color>
     <color name="text_dark_background">#212121</color>
+    <color name="main_color">#FFC107</color>
 </resources>

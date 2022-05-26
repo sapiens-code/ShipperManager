@@ -94,9 +94,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String username = textUsername.getText().toString();
         String password = textPassword.getText().toString();
 
-        if(username.isEmpty() || password.isEmpty())
+        if(username.isEmpty())
         {
-            Toast.makeText(this,"username or password is empty",Toast.LENGTH_SHORT).show();
+            textUsername.setError("Tên tài khoản không được trống");
+            textUsername.requestFocus();
+            return;
+        }
+        if(password.isEmpty())
+        {
+            textPassword.setError("Mật khẩu không được trống");
+            textPassword.requestFocus();
             return;
         }
 
@@ -115,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                         else
                         {
-                            Toast.makeText(getBaseContext(),"tài khoảng của bạn không khả dụng, xin liên hệ với người quản lý hoặc chở xác thực",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(),"tài khoảng của bạn không khả dụng, xin liên hệ với người quản lý hoặc chờ xác thực",Toast.LENGTH_SHORT).show();
                         }
                         return;
                     }

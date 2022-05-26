@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnDaGiao;
     private Button btnLogout;
 
+    private TextView txtShipperName;
+    private TextView txtShipperQueQuan;
+    private TextView txtShipperNgaySinh;
+
     String TAG = "MenuActivity";
 
     int LOCATION_REQUEST_CODE = 10001;
@@ -62,9 +67,14 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         registerListener();
 
+        String json = HelperUtils.GetSharedObject(this,"Shipper");
+        Gson gson = new Gson();
+        Shipper shipper = gson.fromJson(json, Shipper.class);
+        txtShipperName.setText("Tên: "+shipper.Ten);
+        txtShipperQueQuan.setText("Quên Quán: "+shipper.QueQuan);
+        txtShipperNgaySinh.setText("Ngày Sinh: "+shipper.NgaySinh);
+
     }
-
-
 
     private void askForPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -79,21 +89,24 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        //ask for permission access location
-////        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-////            startService(new Intent(this, LocationService.class));
-////        } else {
-////            askForPermission();
-////        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //ask for permission access location
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, LocationService.class));
+        } else {
+            askForPermission();
+        }
+    }
 
     private void initView() {
         btnTimDonHang = findViewById(R.id.btnTimDonHang);
         btnDaGiao = findViewById(R.id.btnDaGiao);
         btnLogout = findViewById(R.id.btnLogout);
+        txtShipperName = findViewById(R.id.txt_shipper_name);
+        txtShipperQueQuan = findViewById(R.id.txt_shipper_quequan);
+        txtShipperNgaySinh= findViewById(R.id.txt_shipper_ngaysinh);
     }
 
     private void registerListener() {

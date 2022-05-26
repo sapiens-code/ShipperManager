@@ -41,14 +41,15 @@ import java.util.List;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private String targetAddressString;
+    private double lat,lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Bundle extras = getIntent().getExtras();
-        targetAddressString = extras.getString("Address");
+        lat = extras.getDouble("lat");
+        lng = extras.getDouble("lng");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -139,7 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .build();
 
             LatLng shopAddress = getLatLngFromAddress("12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Thành phố Hồ Chí Minh");
-            LatLng targetAddress = getLatLngFromAddress(targetAddressString);
+            LatLng targetAddress = new LatLng(lat,lng);
             mMap.addMarker(new MarkerOptions().position(shopAddress).title("Shop address"));
             mMap.addMarker(new MarkerOptions().position(targetAddress).title("Target address"));
             //Define list to get all latlng for the route
