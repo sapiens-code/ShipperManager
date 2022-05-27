@@ -30,12 +30,12 @@
         <div class="form-group">
             <label class="control-label col-md-1">Kinh Độ</label>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.KinhDo, new { htmlAttributes = new { @class = "form-control", @id = "latInput" } })
+                @Html.EditorFor(model => model.KinhDo, new { htmlAttributes = new { @class = "form-control", @id = "latInput" , @readonly = "readonly"} })
                 @Html.ValidationMessageFor(model => model.KinhDo, "", new { @class = "text-danger" })
             </div>
             <label class="control-label col-md-2">Vĩ Độ</label>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.ViDo, new { htmlAttributes = new { @class = "form-control", @id = "lngInput" } })
+                @Html.EditorFor(model => model.ViDo, new { htmlAttributes = new { @class = "form-control", @id = "lngInput", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ViDo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             <label class="control-label col-md-1">Địa Chỉ</label>
             <div class="col-md-8">
-                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @id = "addressInput" } })
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @id = "addressInput" ,  @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
             </div>
         </div>

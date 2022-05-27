@@ -46,35 +46,17 @@ public class OrderListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_list);
         setTitle("TÌM ĐƠN HÀNG MỚI");
         init();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         String json = HelperUtils.GetSharedObject(this,"Shipper");
         Gson gson = new Gson();
         shipper = gson.fromJson(json, Shipper.class);
         
     }
 
-    private void askForPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION))
-            {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-            }else
-            {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-            }
-        }
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //ask for permission access location
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, LocationService.class));
-        } else {
-            askForPermission();
-        }
-    }
 
     // this event will enable the back
     // function to the button on press

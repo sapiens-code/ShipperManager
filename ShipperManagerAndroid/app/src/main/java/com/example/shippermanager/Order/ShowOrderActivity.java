@@ -134,8 +134,8 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
                             txtSanPhamCount.setText("Sản Phẩm: "+String.valueOf(DonHang.DanhSachCTTT.size()));
                             if(DonHang.TrangThaiGiao == TrangThaiDonHang.DaGiao.ordinal())
                             {
-                                btnDaGiao.setEnabled(false);
-                                btnHuyDon.setEnabled(false);
+                                btnDaGiao.setVisibility(View.GONE);
+                                btnHuyDon.setVisibility(View.GONE);
                             }
                             return;
                         }
@@ -202,7 +202,8 @@ public class ShowOrderActivity extends AppCompatActivity implements View.OnClick
     private void ViewMap()
     {
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("Address",DonHang.KhachHang.DiaChi);
+        intent.putExtra("lat",DonHang.KhachHang.KinhDo);
+        intent.putExtra("lng",DonHang.KhachHang.ViDo);
         startActivity(intent);
     }
 

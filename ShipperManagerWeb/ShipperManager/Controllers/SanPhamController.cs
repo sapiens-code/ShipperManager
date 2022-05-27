@@ -1,12 +1,9 @@
 ﻿using Firebase.Auth;
-using Firebase.Database;
-using Firebase.Database.Query;
 using Firebase.Storage;
 using ShipperManager.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -47,6 +44,8 @@ namespace ShipperManager.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return View(product);
+
                 FileStream stream;
                 if(file.ContentLength > 0 && product != null)
                 {
@@ -108,23 +107,34 @@ namespace ShipperManager.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string ma)
         {
-            return View();
+            var sp = await DatabaseUtils.GetElementByKey<SanPham>(TableCategory.SanPham, ma);
+            return View(sp.Object);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(string id, FormCollection collection)
         {
             try
             {
+                SanPham sp = new SanPham();
+                sp.Id = id;
+                sp.Ten = collection["Ten"];
+                if (Decimal.TryParse(collection["Gia"], out decimal gia))
+                    sp.Gia = gia;
+                sp.MoTa = collection["MoTa"];
+                sp.ImagePath = collection["ImagePath"];
+                sp.DanhMuc = collection["DanhMuc"];
+                if (!ModelState.IsValid) return View(sp);
+                await DatabaseUtils.UpdateElementByKey(TableCategory.SanPham, sp, id);
                 // TODO: Add update logic here
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 

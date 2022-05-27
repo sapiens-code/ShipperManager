@@ -39,7 +39,7 @@ namespace ShipperManager.Controllers
             }
             List<ChiTietDonHang> orderDetails = GetOrderDetailt();
             var detail = orderDetails.FirstOrDefault(x => x.SanPham.Id.Equals(proId));
-            if(detail == null)
+            if (detail == null)
             {
                 p.Object.Id = p.Key;
                 orderDetails.Add(new ChiTietDonHang(p.Object));
@@ -50,13 +50,12 @@ namespace ShipperManager.Controllers
                 detail.SoLuong++;
                 return Redirect(strUrl);
             }
-            
         }
 
         private List<ChiTietDonHang> GetOrderDetailt()
         {
             List<ChiTietDonHang> lst = Session[OrderDetailSessionName] as List<ChiTietDonHang>;
-            if(lst == null)
+            if (lst == null)
             {
                 lst = new List<ChiTietDonHang>();
                 Session[OrderDetailSessionName] = lst;
@@ -83,17 +82,16 @@ namespace ShipperManager.Controllers
         public PartialViewResult OrderDetailPartial()
         {
             int sum = QuantitySum();
-            if(sum != 0)
-            {
-                ViewBag.QuantitySum = sum;
-            }
+            ViewBag.QuantitySum = sum;
+
             return PartialView();
         }
 
         // GET: DonHang/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var dh = await DatabaseUtils.GetElementByKey<DonHang>(TableCategory.DonHang, id);
+            return View(dh.Object);
         }
 
         // GET: DonHang/Create
@@ -122,30 +120,9 @@ namespace ShipperManager.Controllers
                 ClearOrderDetail();
                 return RedirectToAction("Index");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return View(donHangViewModel);
-            }
-        }
-
-        // GET: DonHang/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DonHang/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
 
@@ -156,20 +133,43 @@ namespace ShipperManager.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: DonHang/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public PartialViewResult ShowOrderDetail()
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+            return PartialView(lst);
         }
+
+        public ActionResult IncreaseProductQuantity(string id,string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            detail.SoLuong++;
+
+            return Redirect(url);
+        }
+
+        public ActionResult DecreaseProductQuantity(string id, string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            if(detail.SoLuong > 1)
+                detail.SoLuong--;
+            else
+                lst.Remove(detail);
+
+            return Redirect(url);
+        }
+
+        public ActionResult RemoveProductDetail(string id, string url)
+        {
+            List<ChiTietDonHang> lst = GetOrderDetailt();
+
+            var detail = lst.FirstOrDefault(x => x.SanPham.Id.Equals(id));
+            lst.Remove(detail);
+            return Redirect(url);
+        }
+
     }
 }
