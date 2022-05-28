@@ -60,7 +60,7 @@
     </dl>
 
     <div class="form-group">
-        <div><label class="label-info">Đơn Hàng Đã Giao</label></div>
+        <div class="col-md-10"><label class="label-info ">Đơn Hàng Đã Giao</label></div>
         <div class="col-md-10">
             <table class="table">
                 <tr>
@@ -110,7 +110,8 @@
         </div>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Shipper.Id }) |
-        @Html.ActionLink("Back to List", "Index")
+
+        @Html.ActionLink("Trở lại", "Index") |
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Shipper.Id })
     </p>
 </div>
