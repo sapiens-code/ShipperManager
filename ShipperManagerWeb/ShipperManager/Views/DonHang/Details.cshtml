@@ -1,7 +1,7 @@
 ﻿@model ShipperManager.Models.DonHang
 
 <div>
-    <h4>DonHang</h4>
+    <h4>Đơn hàng</h4>
     <hr />
     <div class="container">
         <dl class="dl-horizontal">
@@ -64,7 +64,14 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.TrangThaiGiao)
+                @foreach (var value in ShipperManager.Utils.EnumHelper<ShipperManager.Models.TrangThaiDonHang>.GetValues(ShipperManager.Models.TrangThaiDonHang.DaGiao))
+                {
+                    if (value == Model.TrangThaiGiao)
+                    {
+                        var trangThai = ShipperManager.Utils.EnumHelper<ShipperManager.Models.TrangThaiDonHang>.GetDisplayValue(value);
+                        @Html.DisplayFor(e => trangThai)
+                    }
+                }
             </dd>
 
         </dl>
