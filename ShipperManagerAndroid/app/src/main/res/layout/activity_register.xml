@@ -17,16 +17,6 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="ĐĂNG KÝ"
-            android:textAlignment="center"
-            android:textColor="@color/text_dark_background"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -45,9 +35,9 @@
                 android:drawablePadding="10dp"
                 android:hint="Tên"
 
-                android:textColorHighlight="@color/text_dark_background"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_dark_background"
+                android:textColorHighlight="@color/text_dark_background"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout

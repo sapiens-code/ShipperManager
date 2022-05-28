@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Thu Hộ"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        tools:layout_editor_absoluteX="5dp" />
 
     <TextView
         android:id="@+id/txt_show_order_thu_ho"
@@ -83,24 +83,6 @@
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:text="Dịch Vụ"
-        app:layout_constraintStart_toStartOf="@+id/txt_show_order_lo_trinh"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Siêu Tốc"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="@+id/txt_show_order_thu_ho"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-    <TextView
         android:id="@+id/txt_show_order_san_pham_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,24 +98,21 @@
         android:id="@+id/txt_show_order_lo_trinh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="32dp"
-        android:text="Lộ Trình 13,2km"
+        android:layout_marginTop="168dp"
 
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:text="Lộ Trình 13,2km"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <android.widget.Button
         android:id="@+id/btn_show_order_xem_map"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:text="xem bản đồ"
-        app:layout_constraintEnd_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintBottom_toBottomOf="@+id/txt_show_order_lo_trinh"
+        app:layout_constraintEnd_toEndOf="@+id/txt_show_order_thu_ho"
+        app:layout_constraintTop_toTopOf="@+id/txt_show_order_lo_trinh" />
 
     <android.widget.Button
         android:id="@+id/btn_show_order_xem_san_Pham"
@@ -163,39 +142,40 @@
         android:id="@+id/btn_show_order_huy_don"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:text="HỦY ĐƠN HÀNG"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_show_order_da_giao"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintVertical_bias="0.149" />
 
     <android.widget.Button
 
         android:id="@+id/btn_show_order_da_giao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="84dp"
         android:background="@drawable/main_button"
         android:text="HOÀN THÀNH"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintEnd_toEndOf="@+id/txt_show_order_dia_chi"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_show_order_dia_chi" />
+        app:layout_constraintTop_toTopOf="@+id/txt_show_order_dia_chi" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="405dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
+        android:layout_marginTop="24dp"
         android:background="@color/text_light_background"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <TextView
