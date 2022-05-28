@@ -1,7 +1,9 @@
 package com.example.shippermanager.loggin;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +17,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shippermanager.Model.Shipper;
 import com.example.shippermanager.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
+
+import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, IPickResult {
 
@@ -35,6 +44,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseReference Database;
     private Button btnPickImg;
     private ImageView imgShipper;
+    private Uri filePath;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +59,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
     }
 
@@ -115,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //getImageView().setImageBitmap(r.getBitmap());
 
             //Image path
-            //r.getPath();
+            filePath = r.getUri();
         } else {
             //Handle possible errors
             //TODO: do what you have to do with r.getError();
@@ -173,8 +188,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        Shipper shipper = new Shipper(key, name, ngaySinh, quequan, userName, password, false, 0, 0);
-        Database.child("Shipper").child(key).setValue(shipper);
+
+
+        // Defining the child of storageReference
+        StorageReference ref = storageReference
+                .child("shipper-images/" + UUID.randomUUID().toString());
+        // adding listeners on upload
+        // or failure of image
+        ref.putFile(filePath)
+                .addOnSuccessListener(
+                        new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Download file From Firebase Storage
+                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri downloadPhotoUrl) {
+                                        Shipper shipper = new Shipper(key, name, ngaySinh, quequan, userName, password, false, 0, 0,downloadPhotoUrl.toString());
+                                        Database.child("Shipper").child(key).setValue(shipper);
+                                    }
+                                });
+                                Log.i("tag", "update success");
+                            }
+                        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("tag", "update failure");
+                    }
+                });
+
+
+
+
         startActivity(new Intent(this, LoginActivity.class));
 
 

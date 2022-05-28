@@ -21,5 +21,7 @@ namespace ShipperManager.Models
         public string NgaySinh { get; set; }
         [Display(Name = "Trạng Thái")]
         public bool TrangThai { get; set; }
+        [Display(Name = "Ảnh")]
+        public string ImagePath { get; set; }
     }
 }

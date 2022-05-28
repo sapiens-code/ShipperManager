@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +15,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
@@ -54,6 +59,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtShipperName;
     private TextView txtShipperQueQuan;
     private TextView txtShipperNgaySinh;
+
+    private ImageView shipperImg;
 
     String TAG = "MenuActivity";
 
@@ -73,7 +80,27 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         txtShipperName.setText("Tên: "+shipper.Ten);
         txtShipperQueQuan.setText("Quên Quán: "+shipper.QueQuan);
         txtShipperNgaySinh.setText("Ngày Sinh: "+shipper.NgaySinh);
+        setShipperImage(shipper.ImagePath);
 
+    }
+
+    private void setShipperImage(String path)
+    {
+        StorageReference photoReference = FirebaseStorage.getInstance().getReferenceFromUrl(path);
+        final long ONE_MEGABYTE = 1024 * 1024;
+
+        photoReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                shipperImg.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("tag", "No Such file or Path found!!");
+            }
+        });
     }
 
     private void askForPermission() {
@@ -107,6 +134,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         txtShipperName = findViewById(R.id.txt_shipper_name);
         txtShipperQueQuan = findViewById(R.id.txt_shipper_quequan);
         txtShipperNgaySinh= findViewById(R.id.txt_shipper_ngaysinh);
+        shipperImg = findViewById(R.id.img_menu_shipper);
     }
 
     private void registerListener() {
