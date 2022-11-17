@@ -43,6 +43,7 @@
                     },
                     label: { color: '#000000', fontWeight: 'bold', fontSize: '14px', text: data.Ten }
                 });
+ 
                 ////////////////
                 const contentString =
                     '<div id="content">' +
@@ -52,12 +53,13 @@
                     '<h1 id="firstHeading" class="firstHeading">'+data.Ten+'</h1>' +
                     '<div id="bodyContent">' +
                     "<p>quê quán: "+data.QueQuan+"</p>" +
-                    "<p>ngày sinh: "+data.NgaySinh+"</p>" +
+                    "<p>ngày sinh: " + data.NgaySinh + "</p>" +
                     "</div>" +
                     "</div>";
                 const infowindow = new google.maps.InfoWindow({
                     content: contentString,
                 });
+
                 //add marker event
                 marker.addListener("click", () => {
                     infowindow.open({

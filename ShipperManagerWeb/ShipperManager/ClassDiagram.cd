@@ -37,7 +37,7 @@
   <Class Name="ShipperManager.Models.KhachHang">
     <Position X="18" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAgAAAAAABAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAGAAAAAAAAgAAAAAABAAAEAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Models\KhachHang.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -65,7 +65,7 @@
   <Class Name="ShipperManager.Models.Shipper">
     <Position X="16" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABACAABAAAAAgAAAAAAAACAAAAAAAAAAEAAAAAAAAAI=</HashCode>
+      <HashCode>ABACAABAAAAAgAAAAAAAAKAAAAAAAAAAEAAAAAAAAAI=</HashCode>
       <FileName>Models\Shipper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -86,14 +86,14 @@
   <Class Name="ShipperManager.Controllers.DonHangController">
     <Position X="5.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABABAAAAAIgAAAAAAAEAAECCAAEAAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAABABAAAAAIgAAAAAABEAAkGQAAEAAAIAAAA=</HashCode>
       <FileName>Controllers\DonHangController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ShipperManager.Controllers.KhachHangController">
-    <Position X="5.75" Y="4.25" Width="2.25" />
+    <Position X="3" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAABAAAAAgAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\KhachHangController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -114,7 +114,7 @@
   <Class Name="ShipperManager.Controllers.ShipperController">
     <Position X="8.5" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAAACAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\ShipperController.cs</FileName>
     </TypeIdentifier>
   </Class>

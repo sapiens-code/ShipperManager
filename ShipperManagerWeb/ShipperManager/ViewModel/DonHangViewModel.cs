@@ -69,7 +69,7 @@ namespace ShipperManager.ViewModel
                 return Convert.ToDouble(distance[0].ChildNodes[1].InnerText.Replace(" mi", ""));
             }
 
-            return 0;
+            return 0.5;
         }
 
         private async Task InitKhachHangList()
